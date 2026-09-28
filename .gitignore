@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+
+# Datos crudos
+data/raw/*.jsonl
+data/raw/*.csv
+data/raw/*.txt
+data/processed/*.csv
+
+# Logs
+logs/
+*.log
+
+# Fixtures
+fixtures/
+Contexto de anuncios de revolicos/
+
+# Documentos de trabajo
+*.docx
+*.bak
+*.bak2
+*.jsonl.bak
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
