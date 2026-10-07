@@ -1,0 +1,282 @@
+================================================================================
+ANÁLISIS DE TEXTO (NLP) — ANUNCIOS DE VENTA EN PLAYA, LA HABANA
+================================================================================
+Fecha de generación: 3 de octubre de 2026
+Dataset base  : data/processed/playa_limpio_v2.csv (105 anuncios)
+Script        : scripts/clustering_texto.py
+Método        : TF-IDF (max_features=100, ngram_range=1-2, min_df=2) + K-Means
+Selección de K: Silhouette Score (K=3: 0.1172 | K=4: 0.1313) -> K=4
+Visualización : PCA 2D (PC1 12.3% + PC2 7.5% = 19.8% de la varianza)
+
+Advertencia de alcance: estudio de caso sobre el municipio de Playa.
+Muestreo no probabilístico. Los hallazgos no se extrapolan a La Habana ni a Cuba.
+
+================================================================================
+1. LOS CUATRO CLÚSTERES DE TEXTO
+================================================================================
+
+--------------------------------------------------------------------------------
+CLÚSTER 0 — CASAS FAMILIARES EN VENTA              n=52 (49.5%)
+  Vocabulario dominante: casa, playa, cocina, independiente, grande, pasillo,
+  propiedad, consta, lavado, tanques
+  Tipo de inmueble  : casa (52/52)
+  Precio mediana    : 70,000 USD
+  Palabras (media)  : 87
+  Palabras clave    : (la más alta de los clusters resume una descripción
+                      doméstica completa, con inventario de espacios)
+  Segmentos         : popular 24, medio 16, lujo 12
+  Interpretación    : Es el grupo mayoritario y transversal a los segmentos de
+                      mercado. Son anuncios particulares que describen la casa
+                      habitación por habitación, sin formato técnico.
+
+--------------------------------------------------------------------------------
+CLÚSTER 1 — FICHAS DE AGENCIA INMOBILIARIA        n=16 (15.2%)
+  Vocabulario dominante: inmobiliaria, cuba, tanque motor, tipo construccion,
+  electricidad fria, cisterna tanque, viawn propiedad, qr, ref
+  Tipo de inmueble  : habitacion (16/16, etiqueta discutible, ver nota)
+  Precio mediana    : 150,000 USD  (el más alto de los cuatro)
+  Palabras (media)  : 127  (el más extenso)
+  Segmentos         : medio 9, lujo 6, popular 1
+  Interpretación    : NO son ventas individuales. Son fichas técnicas de
+                      agencias (formato "Casas Habana"), con referencia interna
+                      (REF), código QR, especificaciones de instalación
+                      (cisterna, tanque, motor, tipo de construcción) y una
+                      estructura de plantilla idéntica.
+                      VER SECCIÓN 3: este cluster debe analizarse aparte.
+
+--------------------------------------------------------------------------------
+CLÚSTER 2 — APARTAMENTOS CON PAPELES EN MIRAMAR   n=17 (16.2%)
+  Vocabulario dominante: apartamento, papeles, libre, fijo, cocina, miramar,
+  nauta, hogar, playa, cuenta
+  Tipo de inmueble  : apartamento (17/17)
+  Precio mediana    : 25,000 USD
+  Palabras (media)  : 79
+  Segmentos         : popular 15, medio 1, lujo 1
+  Interpretación    : Apartamentos en Miramar y Santa Fe conemphasis en la
+                      situación legal: "papeles", "libre de gravamen",
+                      "cuenta". El conflicto entre precio bajo (mediana 25k) y
+     审查 legal favorable es el rasgo distintivo del grupo.
+
+--------------------------------------------------------------------------------
+CLÚSTER 3 — APARTAMENTOS EN EDIFICIO CAPITALISTA  n=20 (19.0%)
+  Vocabulario dominante: edificio, capitalista, edificio capitalista, estado,
+  cocina, buena, apto, amplio, playa, baja
+  Tipo de inmueble  : apartamento (20/20)
+  Precio mediana    : 20,000 USD  (el más bajo)
+  Palabras (media)  : 51  (el más breve)
+  Segmentos         : popular 19, medio 1
+  Interpretación    : Anuncios escuetos de apartamentos en edificio de
+      construccion capitalista. La brevedad extrema (51 palabras) indica un
+      estilo de venta rápida o de bajo esfuerzo publicitario.
+
+================================================================================
+2. HALLAZGO METODOLÓGICO CENTRAL: LA MIGRACIÓN ES INVISIBLE ONLINE
+================================================================================
+
+La variable `menciona_urgencia_viaje` recalculada sobre los 105 anuncios de Playa
+arrojó un resultado del 0.0% (0 de 105). Ningún anuncio menciona emigración,
+viaje al extranjero, visa, pasaje ni salida del país.
+
+DETALLE DE LA AUDITORÍA (relevante para el resto del proyecto)
+------------------------------------------------------------------
+La tasa de falsos positivos de esa variable fue del 100% (2 de 2). La causa fue
+un defecto de implementación en la función `contiene_keywords`, que buscaba las
+palabras clave por coincidencia de SUBCADENA en lugar de palabra completa.
+
+  Keyword usada:  "visa"
+  Texto del anuncio: "...visitas de lunes a sabado avisando con tiempo..."
+  Resultado:        match por la subcadena "visa" dentro de "avISAndo"
+
+Ambos anuncios afectados eran descripciones normales con el aviso de horario de
+visita, no referencias a documentación migratoria. La corrección consistió en
+exigir límites de palabra (`\bvisa\b`), tras lo cual ambos falsos positivos
+desaparecen. Verificación posterior: 11 casos de prueba, 11 correctos.
+
+INTERPRETACIÓN
+------------------------------------------------------------------
+Este hallazgo NO debe leerse como "no hay migración en Playa". Debe leerse como:
+
+  1. El mercado online es un canal ciego para medir motivación migratoria.
+     Los vendedores no verbalizan su situación; escriben sobre el inmueble.
+
+  2. Esto justifica metodológicamente el diseño del proyecto: las entrevistas
+     presenciales (Pilar 4) son la única fuente capaz de capturar la
+     motivación real de venta. El scraping aporta contexto de precios y
+     tipología, no intención.
+
+  3. El contraste entre "0% online" y lo que digan los entrevistados
+     es precisamente el hallazgo de investigación: la migración existe en el
+     barrio pero es invisible en el anuncio.
+
+  Limitación adicional: la muestra de Playa son 105 anuncios tras filtrar
+  735. Con este tamaño, un efecto real menor al 3% sería indetectable. El
+  0% describe esta muestra, no el fenómeno.
+
+================================================================================
+3. EL CLÚSTER 1 (AGENCIAS) DEBE ANALIZARSE POR SEPARADO
+================================================================================
+
+Razones técnicas para separarlo del resto:
+
+  Precio        : mediana de 150,000 USD frente a 70,000 / 25,000 / 20,000 de
+                  los otros tres clusters. Es el más caro del conjunto.
+
+  Extensión     : 127 palabras de media, el doble que el cluster 3.
+
+  Vocabulario   : "ref", "qr", "tipo construccion", "cisterna", "tanque motor"
+                  son marcadores de un formato publicitario de agencia. No
+                  describen la casa: describen la ficha del producto.
+
+  Etiqueta de tipo: el cluster aparece como "habitacion" (16/16), lo que es un
+                  artefacto de la clasificación por keywords, no una
+                  característica real del inmueble.
+
+Por qué importa para el análisis de precios
+--------------------------------------------------------------------------------
+Si se mezclan, la mediana de precio de Playa se distorsiona. Los 16 anuncios
+de agencia incluyen:
+
+  a) un sesgo de selección de inventario (las agencias publican lo que les
+     comisionan, no el mercado completo), y
+
+  b) precios de lista con margen de negociación, no de cierre.
+
+Recomendación operativa: recalcular los indicadores de precio de Playa
+reportando dos cifras, una con y otra sin el cluster 1. Cualquier diferencia
+apreciable entre ambas indica cuánto depende el resultado del canal
+institucional.
+
+================================================================================
+4. RESUMEN DE LOS CUATRO CLUSTERS
+================================================================================
+Cluster  n    Vocabulario principal          Tipo          Mediana    Segmento
+-------  ---  -----------------------------  ------------  ---------  ---------------
+    0     52   casa, cocina, independiente    casa          70,000    transversal
+    1     16   inmobiliaria, cuba, ref        habitacion*  150,000    medio/lujo
+    2     17   apartamento, papeles, libre   apartamento   25,000    popular
+    3     20   edificio, capitalista, apto   apartamento   20,000    popular
+
+  * etiqueta discutible, ver sección 3.
+
+================================================================================
+5. ADVERTENCIAS SOBRE EL MÉTODO
+================================================================================
+
+Silueta baja     : el score fue 0.131. Por debajo de 0.25 la estructura de
+                    clusters se considera débil. Además, la diferencia entre
+                    K=3 (0.1172) y K=4 (0.1313) es pequeña, por lo que la
+                    elección de K=4 no es robusta.
+
+PCA parcial       : PC1+PC2 explican solo el 19.8% de la varianza sobre 100
+                    términos. El gráfico muestra menos de un quinto de la
+                    información; dos puntos que parecen juntos pueden estar
+                    lejos en las dimensiones no representadas.
+
+Superposición      : los clusters 0 y 2 se solapan parcialmente. El cluster 3
+                    (edificio capitalista) y el 2 (Miramar/papeles) son ambos
+                    de apartamentos de precio bajo y se distinguen
+                    essencialmente por vocabulario.
+
+Clustering        : agrupa por ESTILO Y TEMA DEL ANUNCIO (particular vs.
+                    agencia, tipo de inmueble, Mencion legal), no por motivacion
+                    de venta. Esa variable no existe en los datos online.
+
+Tamaño de muestra : 105 anuncios. Suficiente para describir tipologías, no para
+                    inferencia estadística por cluster.
+
+================================================================================
+6. LIMITACION METODOLOGICA: LA COMPARACION DE PRECIOS POR BARRIO
+================================================================================
+
+La comparacion de precios por barrio entre canales no es estadisticamente
+viable debido al bajo tamano de muestra (n<3) en la mayoria de los barrios.
+Se reporta la cobertura geografica como hallazgo principal: las redes sociales
+son 3 veces mas precisas en ubicacion que Revolico.
+
+DATOS QUE SUSTENTAN LA LIMITACION
+--------------------------------------------------------------------------------
+  Total de anuncios              : 135  (Revolico 105 | Redes 30)
+  Barrios documentados           : 14
+  Barrios presentes en AMBOS     : 4  (Kohly, Miramar, Reparto Nautico, Siboney)
+  Barrios solo en Revolico       : 2  (Atabey, Santa Fe)
+  Barrios solo en redes          : 8  (Buenavista, Flores, Fontanar,
+                                       Juan Manuel Marquez, La Ceiba,
+                                       La Corbata, Querejeta, Sierra)
+
+  Solo Miramar alcanza n >= 3 en ambos canales (11 vs 5). En Kohly, Siboney y
+  Reparto Nautico, una de las dos fuentes tiene n = 1.
+
+HALLAZGO PRINCIPAL: COBERTURA GEOGRAFICA
+--------------------------------------------------------------------------------
+  Fuente     n    con barrio    precision
+  Revolico   105          25        23.8%
+  Redes       30          23        76.7%
+
+  Las redes sociales son 3.2 veces mas precisas en localizacion. Un anuncio de
+  grupo de compraventa nombra el barrio porque el vendedor lo dice para atraer
+  compradores locales; un anuncio de Revolico lo omite cuando la descripcion es
+  extensa.
+
+CONSECUENCIA PARA EL ANALISIS
+--------------------------------------------------------------------------------
+  - No se publica el grafico de comparacion de medianas por barrio: con n = 1
+    en la mayoria de los casos, la mediana es el propio valor y no una
+    estadistica. Seria un grafico enganoso.
+  - El contraste de precios entre canales solo puede hacerse a nivel de
+    municipio, no de barrio.
+  - Detalle completo en resultados/cobertura_geografica.txt.
+
+SESGO DE SELECCION DOCUMENTADO (antiguedad de los anuncios)
+--------------------------------------------------------------------------------
+Una verificacion de 10 anuncios aleatorios de Revolico (7 octubre 2026) dio:
+  - 10/10 activos, ninguno eliminado (404)
+  - Antiguedad entre 18 horas y 61 dias, mediana ~8 dias
+  - La fecha disponible es de ACTUALIZACION (data-cy="adUpdatedOn"), no de
+    publicacion original.
+
+Esto implica que el dataset sobre-representa propiedades que llevan tiempo sin
+venderse: un anuncio que se vendiera en semanas se retiraria del listado. Los
+precios scraped corresponden a anuncios vigentes, no a operaciones cerradas.
+
+================================================================================
+
+================================================================================
+
+  1. Analizar el cluster 1 (agencias) como corpus aparte, con su propio
+     indicador de precio.
+  2. Cruzar el cluster_texto con el cluster_caracteristicas (numérico) para
+     ver si coinciden o se cruzan.
+  3. Incorporar `motivo_venta_codificado` del Pilar 4 (entrevistas) como
+     variable de clustering. Esa sí captura la motivación.
+  4. Revisar el vocabulario del cluster 2: la referencia a "papeles" sugiere
+     un eje de análisis (conflicto entre precio ySitución legal) que merece
+     una variable propia.
+
+================================================================================
+
+7. PRÓXIMOS PASOS
+
+  1. Analizar el cluster 1 (agencias) como corpus aparte, con su propio
+     indicador de precio.
+  2. Incorporar `motivo_venta_codificado` del Pilar 4 (entrevistas) como
+     variable de clustering. Esa si captura la motivacion.
+  3. Recopilar mas anuncios de redes sociales: Buenavista, La Ceiba y 6 barrios
+     mas no tienen cobertura en Revolico, y las redes son 3.2 veces mas
+     precisas en ubicacion.
+  4. Si se repite el scraping, capturar `fecha_actualizacion` y `visitas`
+     (data-cy="adUpdatedOn") para controlar el sesgo de seleccion por
+     antiguedad.
+  5. Cruzar el cluster_texto con el cluster_caracteristicas para ver si
+     coinciden o se cruzan.
+
+Archivos generados:
+  data/processed/playa_limpio_v2.csv
+  data/processed/playa_clusterizado_texto.csv
+  graficos/clusters_texto.png
+  resultados/clustering_texto.txt
+  resultados/analisis_playa.txt
+  resultados/cobertura_geografica.txt
+  data/processed/dataset_unificado.csv
+  data/processed/redes_sociales_limpias.csv
+  scripts/procesar_redes.py
+================================================================================
