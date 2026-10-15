@@ -1,32 +1,82 @@
-# Python
+# --- Python ---
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- Entorno virtual (obligatorio,AGENTS.md) ---
 .venv/
 venv/
 env/
 
-# Datos crudos
+# --- Datos crudos: pueden contener carné de identidad y anuncios personales ---
+# AGENTS.md exige que data/raw/ sea inmutable, no necesariamente versionado.
+# Los datos limpios sí se versionan para poder reproducir el análisis.
 data/raw/*.jsonl
 data/raw/*.csv
 data/raw/*.txt
-data/processed/*.csv
+!data/raw/.gitkeep
 
-# Logs
+# Los .gitkeep de los directorios de datos sí se versionan
+!data/**/.gitkeep
+
+# --- Fixtures HTML (pesados y son contenido de terceros, no código) ---
+# La carpeta real se llama "Contexto de anuncios de revolicos", no "fixtures".
+Contexto de anuncios de revolicos/
+Contexto de anuncios de revolicos/*.html
+*fixture*.html
+
+# --- Logs (registro de ejecución, no se versionan) ---
 logs/
 *.log
 
-# Fixtures
-fixtures/
-Contexto de anuncios de revolicos/
-
-# Documentos de trabajo
-*.docx
+# --- Backups de datos crudos ---
+# El patrón data/raw/*.jsonl NO cubre los .bak, porque exige el sufijo completo.
 *.bak
 *.bak2
+*.bak3
+*.bak4
 *.jsonl.bak
+data/raw/*.tmp
+data/raw/*.jsonl.tmp
 
-# Sistema operativo
+# --- Exportaciones de datos derivados ---
+# Los CSV de data/processed/ NO se versionan: son regenerables ejecutando los
+# scripts y ocupan cientos de KB. Los ya versionados en commits previos
+# (playa_limpio.csv y sus derivados) siguen en el repo: este patrón solo
+# afecta a archivos nuevos. Para dejar de seguir uno hay que usar
+# `git rm --cached`.
+data/processed/*.csv
+data/processed/*.txt
+
+# --- Datos sensibles (CRÍTICO) ---
+# entrevistas_raw.txt contendrá carné de identidad del Pilar 3: dato personal
+# que AGENTS.md prohíbe almacenar en texto claro ni versionar.
+data/raw/*.txt
+data/raw/entrevistas_raw.txt
+entrevistas_raw.txt
+
+# --- Configuración local y secretos ---
+.env
+config/config.local.yaml
+
+# --- Jupyter ---
+.ipynb_checkpoints/
+
+# --- Excepciones de Excel por tamaño de hoja ---
+*.xls
+!*.xlsx
+
+# --- Documentos de trabajo locales ---
+SCRAPER OPENCODE PARA ANALIZAR.docx
+*.docx
+
+# --- Sistema operativo / editores ---
 .DS_Store
 Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp

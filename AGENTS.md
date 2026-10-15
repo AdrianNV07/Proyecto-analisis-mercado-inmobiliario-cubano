@@ -40,6 +40,14 @@ Tres dimensiones de análisis:
 > las conclusiones se restringen a **Playa**. Nunca se extrapolan resultados de
 > Playa al resto de la ciudad: es un estudio de caso, no representativo.
 
+> **Formato de salida estándar del proyecto: JSON Lines (`.jsonl`).**
+> Todos los datasets se almacenan como JSON Lines: un objeto JSON por línea,
+> codificación UTF-8. Se adopta JSONL y no CSV porque conserva los tipos
+> reales (`float`, `bool`, `null`) sin conversiones, tolera campos ausentes
+> entre registros y permite procesar línea a línea sin cargar el dataset
+> completo en memoria. Los CSV quedan solo como exportacion puntual para
+> abrir en Excel, nunca como formato de almacenamiento.
+
 > **Limitación asumida.** El muestreo de entrevistas es no probabilístico (ver
 > Pilar 4). Los resultados describen a las personas entrevistadas, no a la
 > población de Playa. Reportar siempre el `n` y el método de selección.
@@ -58,10 +66,10 @@ Tres dimensiones de análisis:
 ├── data/
 │   ├── raw/                   # Datos sin procesar — solo lectura
 │   │   ├── revolico_ventas.jsonl      # Pilar 1: toda La Habana
-│   │   ├── inmobiliarias_ventas.jsonl # Pilar 2: portales formales
-│   │   ├── grupos_manual.csv          # Pilar 3: Facebook/Telegram
+│   │   ├── inmobliarias_fisicas_manual.jsonl  # Pilar 2: manual
+│   │   ├── anuncios_extraidos.docx    # Pilar 3: Facebook/Telegram
 │   │   ├── entrevistas_playa_raw.txt  # Pilar 4: transcripciones
-│   │   └── entrevistas_playa.csv      # Pilar 4: codificadas
+│   │   └── entrevistas_playa.jsonl     # Pilar 4: codificadas
 │   ├── interim/               # Datos limpios / normalizados
 │   └── processed/             # Datasets analíticos finales
 ├── resultados/
@@ -70,7 +78,7 @@ Tres dimensiones de análisis:
 ├── notebooks/                 # Análisis exploratorio
 ├── scripts/
 │   ├── scraper_revolico.py          # Pilar 1 (nombre real actual)
-│   ├── 02_plantilla_csv.py
+│   ├── resumen_inmobiliarias.py
 │   ├── 03_procesar_entrevistas.py
 │   ├── 04_unificar_datasets.py
 │   ├── 05_analisis_final.py
@@ -90,9 +98,9 @@ Tres dimensiones de análisis:
 | # | Archivo | Pilar | Contenido | Cobertura |
 |---|---|---|---|---|
 | 1 | `data/raw/revolico_ventas.jsonl` | 1 | Anuncios scrapeados | Toda La Habana |
-| 2 | `data/raw/inmobiliarias_ventas.jsonl` | 2 | Portales formales | Toda La Habana |
-| 3 | `data/raw/grupos_manual.csv` | 3 | Grupos de compraventa | Playa y zonas de oferta |
-| 4 | `data/raw/entrevistas_playa.csv` | 4 | Entrevistas codificadas | Solo Playa |
+| 2 | `data/raw/inmobliarias_fisicas_manual.jsonl` | 2 | Portales formales | Toda La Habana |
+| 3 | `data/raw/anuncios_extraidos.jsonl` | 3 | Grupos de compraventa | Playa y zonas de oferta |
+| 4 | `data/raw/entrevistas_playa.jsonl` | 4 | Entrevistas codificadas | Solo Playa |
 | — | `resultados/analisis_playa.txt` | — | Hallazgos y conclusiones | Playa (contexto de ciudad) |
 
 ---
@@ -173,6 +181,7 @@ filtrar por vivienda en el análisis de Playa.
 | `menciona_urgencia_viaje` | bool | Ver reglas de keywords |
 | `menciona_problemas_estructurales` | bool | — |
 | `cantidad_palabras` | int | — |
+| `es_intermediario` | bool | `True` si el texto nombra una inmobiliaria, agencia, gestor o realtor |
 | `url` | str | Clave de deduplicación |
 
 ### Campo `menciona_urgencia_viaje`: hallazgo empírico
@@ -228,56 +237,65 @@ Para inferencia estadística usar solo `banos_inferido == False`.
 ## 📝 Pilar 2 — Sitios especializados / inmobiliarias (precios formales)
 
 ### Script
-`scripts/02_plantilla_csv.py`
+`scripts/resumen_inmobiliarias.py`
 
-Genera una **plantilla vacía con encabezados** para registrar anuncios de portales
-inmobiliarios formales y gestores: Vivopedia, Infocasa, Cubanet y agencias
-con sitio web.
+Registra anuncios de portales inmobiliarios formales y gestores: Vivopedia,
+Infocasa, Cubanet y agencias con sitio web físico. La captura es manual y
+se almacena en JSON Lines.
 
 > **Rol en el estudio:** permite contrastar el **precio formal** (agencia, con
 > comisión, contrato) contra el **precio informal** del Pilar 1. Si hay diferencia
 > sistemática en Playa, indica un costo de intermediación que presiona al
 > vendedor directo.
 
-**Archivo:** `data/raw/inmobiliarias_ventas.jsonl`
+**Archivo:** `data/raw/inmobliarias_fisicas_manual.jsonl`
 
-> Los grupos de redes sociales se registran aparte, en el **Pilar 3**
-> (`data/raw/grupos_manual.csv`), porque tienen dinámica y tratamiento distintos.
+> **ESTADO: PENDIENTE DE RECOLECCIÓN MANUAL.** Este pilar aún no tiene datos.
+> La plantilla del archivo existe con una línea de ejemplo que debe borrarse
+> antes de empezar a llenar datos reales.
+>
+> **Script de resumen:** `scripts/resumen_inmobiliarias.py` (solo lee y
+> reporta; no escribe datos). Detecta y descarta la línea de ejemplo
+> automáticamente.
 
-### Columnas (en este orden exacto)
+### Columnas (una por objeto JSON)
 ```
-precio, tamaño, habitaciones, estado_casa, tipo_inmueble, fuente,
-fecha_publicación, moneda, dirección, baños, espacios_exteriores, casa_amueblada
+nombre_agencia, direccion_fisica, titulo, precio, moneda, barrio,
+tipo_inmueble, habitaciones, banos, metros_cuadrados, descripcion
 ```
 
 | Columna | Tipo | Notas |
 |---|---|---|
-| `precio` | float | Sin símbolo de moneda |
-| `tamaño` | float | m² |
-| `habitaciones` | int | — |
-| `estado_casa` | str | Vocabulario cerrado (ver abajo) |
-| `tipo_inmueble` | str | Mismo vocabulario que Pilar 1 |
-| `fuente` | str | `Vivopedia`, `Facebook`, `WhatsApp`, etc. |
-| `fecha_publicación` | str | ISO `YYYY-MM-DD` |
-| `moneda` | str | `CUP` / `USD` / `EUR` |
-| `dirección` | str | — |
-| `baños` | int \| null | — |
-| `espacios_exteriores` | int \| null | Cantidad (jardín, patio, terraza…) |
-| `casa_amueblada` | bool | `True` / `False` |
+| `nombre_agencia` | str | Nombre comercial de la inmobiliaria |
+| `direccion_fisica` | str | Dirección de la oficina física |
+| `titulo` | str | — |
+| `precio` | float \| null | Sin símbolo de moneda |
+| `moneda` | str | `USD` / `CUP` |
+| `barrio` | str \| null | **Ubicación del inmueble**, no de la oficina |
+| `tipo_inmueble` | str | Vocabulario cerrado |
+| `habitaciones` | int \| null | — |
+| `banos` | int \| null | — |
+| `metros_cuadrados` | float \| null | m² |
+| `descripcion` | str | — |
 
-### Vocabulario cerrado para `estado_casa`
-```
-nuevo | como_nuevo | remodelado | bueno | necesita_reparacion | para_remodelar
-```
+> Los grupos de redes sociales se registran aparte, en el **Pilar 3**
+> (`data/raw/anuncios_extraidos.jsonl`), porque tienen dinámica y tratamiento
+> distintos.
+
+> **Nota sobre el precio.** El precio publicado por una inmobiliaria incluye su
+> comisión, mientras que el de un particular no. Al comparar el Pilar 2 con el
+> Pilar 1 hay que distinguir el precio de *lista* del precio de *cierre*: esta
+> fuente solo permite observar el primero.
 
 ### Comportamiento del script
-- Escribir el CSV **con encabezados y sin filas de datos**.
-- Crear el archivo solo si no existe. **Nunca sobrescribir** un CSV con datos
-  registrados manualmente; preguntar al usuario antes de cualquier operación
-  destructiva sobre este archivo.
-- Usar `csv.DictWriter` con `newline=""` y `encoding="utf-8-sig"` (para que Excel
-  abra bien los acentos en Windows).
-- No inventar ni rellenar valores de ejemplo: la plantilla es solo de estructura.
+- `scripts/resumen_inmobiliarias.py` **solo lee y reporta**: no escribe ni
+  modifica el archivo de datos.
+- Detecta y descarta automáticamente la línea de ejemplo de la plantilla,
+  para que no contamine las estadísticas.
+- Señala las líneas con JSON inválido en lugar de fallar, y las cuenta aparte.
+- Reporta cobertura por columna, precio (promedio, mediana, min, max),
+  desglose por agencia, por barrio y precio por m².
+- **Nunca sobrescribir** el archivo: contiene trabajo de recolección manual.
 
 ---
 
@@ -292,7 +310,7 @@ nuevo | como_nuevo | remodelado | bueno | necesita_reparacion | para_remodelar
 > **validar** que las tendencias observadas en el Pilar 1 no son un artefacto de
 > esa plataforma.
 
-**Archivo:** `data/raw/grupos_manual.csv`
+**Archivo:** `data/raw/anuncios_extraidos.jsonl`
 
 ### Método de recolección: manual
 A diferencia del Pilar 1, aquí **no se automatiza**. Motivos:
@@ -353,7 +371,7 @@ dos canales? Esto cambia la lectura de la oferta total.
 `scripts/04_procesar_entrevistas.py`
 
 **Entrada:** `data/raw/entrevistas_playa_raw.txt`
-**Salida:** `data/raw/entrevistas_playa.csv`
+**Salida:** `data/raw/entrevistas_playa.jsonl`
 
 > **Rol en el estudio:** es la **fuente principal**. A diferencia del Pilar 1,
 > donde los anuncios no verbalizan la migración, las entrevistas sí capturan el
@@ -422,7 +440,7 @@ Reglas de codificación:
   1 o 2 casos no admite interpretación; se reporta como anecdotal.
 
 ### Esquema de salida
-**Archivo:** `data/raw/entrevistas_playa.csv`
+**Archivo:** `data/raw/entrevistas_playa.jsonl`
 
 | Columna | Tipo | Notas |
 |---|---|---|
@@ -566,8 +584,8 @@ Los tres datasets se alinean en un **esquema unificado** para poder cruzarlos:
 
 ```python
 ESQUEMA_UNIFICADO = [
-    "precio", "moneda", "tamaño", "habitaciones", "baños", "estado_casa",
-    "tipo_inmueble", "direccion", "municipio", "fecha_publicación", "url",
+    "precio", "moneda", "tamaño", "habitaciones", "baños",
+    "tipo_inmueble", "direccion", "municipio", "barrio", "es_intermediario", "url",
     "fuente", "casa_amueblada", "urgencia_viaje", "espacios_exteriores",
 ]
 ```
