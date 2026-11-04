@@ -1,0 +1,59 @@
+# Handoff No.1 — Proyecto: Crisis Migratoria y Mercado Inmobiliario en Playa, La Habana
+
+## 📅 Fecha
+2026-11-05
+
+## 🎯 Objetivo
+Estudio de caso con enfoque mixto sobre el impacto de la crisis migratoria en el
+mercado inmobiliario del municipio de Playa (La Habana).
+
+## ✅ Estado actual de la sesión
+- Se procesaron las **30 entrevistas callejeras** entregadas en
+  `Entrevistas.docx` (el adjunto `.txt` llegó vacío, 0 bytes).
+- Se generó `data/raw/entrevistas_playa.jsonl` (30 registros, 26 campos).
+- Se generó `resultados/entrevistas_playa_resumen.txt`.
+- Se generó `scripts/04_procesar_entrevistas_playa.py` (parser + cálculos).
+- Se generó `resultados/analisis_entrevistas.txt` (294 líneas, 13 secciones,
+  incluido el Anexo de citas textuales sobre la invisibilidad migratoria).
+- Se generó `scripts/05_analisis_entrevistas.py` (lectura del JSONL + informe).
+
+## 🔎 Hallazgos recientes (Pilar 4)
+- Migración declarada: 10/30 = 33.3 % (40.0 % entre quienes respondieron).
+- Contraste con Revolico: 0/135 anuncios (0.0 %) verbalizan la migración.
+- 0/10 vendedores migrantes la incluyeron en el anuncio.
+- Margen de negociación: 3.13 % (migración) vs 1.42 % (no migración); robustez
+  7.82 % vs 4.96 % al excluir márgenes 0.
+- Problemas ocultos: 3/30 = 10.0 % (3/4 entre quienes declararon problema).
+- Intermediarios: 11/30 = 36.7 % (10.0 % migrantes vs 53.3 % no migrantes).
+- Razones para preferir Playa: tranquilidad (46.7 %), belleza (40.0 %), desarrollo
+  económico (30.0 %).
+
+## ➕ Última acción de la sesión
+- Se creó `data/processed/agencias_online.jsonl` (30 anuncios Casaoasis,
+  municipio Playa, moneda USD, 30 registros JSONL válidos).
+- Se verificó: 30 líneas, 30 registros, claves consistentes, sin CJK.
+
+## 🧩 Notas metodológicas
+- `plan_b`: null en todos los registros (el cuestionario transcrito no lo tenía).
+- "No acepto menos" se codifica como margen 0.
+- Entrevista #30: `habitaciones = null` (respuesta 108 imposible).
+- Entrevista #3: `precio_minimo = null` (falta la pregunta 14).
+
+## ⏳ Pendiente
+- Push de los 4 commits sin subir (`main...origin/main [ahead 4]`).
+- Pilar 2: recolección de datos de agencias online (datos procesados en
+  `data/processed/agencias_online.jsonl`).
+- Pilar 4: reunión final con personas entrevistadas (fuente principal completa).
+
+## 📁 Archivos relevantes recientes
+- `scripts/04_procesar_entrevistas_playa.py`
+- `scripts/05_analisis_entrevistas.py`
+- `resultados/analisis_entrevistas.txt`
+- `resultados/entrevistas_playa_resumen.txt`
+- `data/raw/entrevistas_playa.jsonl`
+- `data/processed/agencias_online.jsonl`
+
+## 🚫 Prohibiciones vigentes
+- No exceder n < 30 en análisis con inferencia estadística formal.
+- No usar `menciona_urgencia_viaje` como medida de urgencia.
+- No extrapolar Playa a La Habana o el país.
