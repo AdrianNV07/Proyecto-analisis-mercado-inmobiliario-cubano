@@ -280,3 +280,223 @@ Archivos generados:
   data/processed/redes_sociales_limpias.csv
   scripts/procesar_redes.py
 ================================================================================
+
+================================================================================
+6. PERFILADO DE CLÚSTERES — LÓGICA DE NOMBRAMIENTO
+================================================================================
+
+6.1. CLUSTERING DE TEXTO (TF-IDF + K-Means, K=5)
+
+Criterio de nombramiento: análisis del vocabulario dominante (top 10 palabras
+por peso TF-IDF), tipo de inmueble dominante y mediana de precio de cada clúster.
+
+  El Clúster 0 se nombró "Venta con Trámites Pendientes" porque el texto enfatiza trámites y documentación (regla, papeles, negocio); el lenguaje sugiere entrega inmediata (fijo); el tipo dominante es apartamento; el precio mediano es bajo (17,000 USD).
+
+  El Clúster 1 se nombró "Anuncios de Agencias" porque el vocabulario dominante incluye términos de agencia (inmobiliaria, agencia, ref); el tipo dominante es apartamento; el precio mediano es alto (110,000 USD); el 97% son anuncios de intermediarios.
+
+  El Clúster 2 se nombró "Apartamentos en Edificio" porque las palabras clave mencionan características de edificio (edificio, listo, capitalista); el tipo dominante es apartamento; el precio mediano es bajo (25,000 USD).
+
+  El Clúster 3 se nombró "Casas Económicas" porque el tipo dominante es casa.
+
+  El Clúster 4 se nombró "Apartamentos en Edificio" porque las palabras clave mencionan características de edificio (edificio); el lenguaje sugiere entrega inmediata (deja, fijo, cosas); el tipo dominante es apartamento; el precio mediano es bajo (16,000 USD).
+
+6.2. CLUSTERING NUMÉRICO (K-Means, K=óptimo)
+
+Criterio de nombramiento: medianas de precio, habitaciones y baños, más
+porcentaje de anuncios de intermediarios.
+
+  El Clúster numérico 0 se nombró "Viviendas Pequeñas Económicas" porque la mediana de precio es 23,000 USD, con 2.0 habitaciones y 1.0 baños en promedio.
+
+  El Clúster numérico 1 se nombró "Viviendas Medias (Intermediarios)" porque la mediana de precio es 62,500 USD, con 3.0 habitaciones y 2.0 baños en promedio.
+
+  El Clúster numérico 2 se nombró "Viviendas Económicas" porque la mediana de precio es 6,300 USD, con nan habitaciones y 70.0 baños en promedio.
+
+6.3. COMPARACIÓN CON PLAYA
+
+Los perfiles discursivos de La Habana NO son idénticos a los de Playa:
+
+- En La Hay 5 perfiles vs 4 en Playa (la muestra 5x más grande permite más
+  granularidad).
+- Aparece un perfil "Venta con Trámites Pendientes" (vocabulario: regla,
+  papeles, negocio) que no existe en Playa. Refleja la complejidad legal
+  adicional en la capital.
+- El perfil de agencias inmobiliarias está más marcado en La Habana
+  (vocabulario técnico: inmobiliaria, wa, https, ref).
+- Los perfiles de "Entrega Inmediata" (deja, cosas, fijo, split) sugieren
+  un mercado con mayor urgencia de venta en La Habana.
+- Las diferencias de precio entre ambos municipios son significativas:
+  La Habana tiene perfiles económicos más marcados (17k USD mediana) mientras
+  Playa concentra el segmento de lujo (265k USD mediana).
+
+6.4. LIMITACIONES
+
+- K=5 fue seleccionado por Silhouette Score (0.065), un valor bajo que indica
+  que los clústeres de texto no están perfectamente separados. Los nombres
+  son orientativos y deben interpretarse con cautela.
+- El clustering numérico usa K seleccionado también por Silhouette, con
+  características estandarizadas (precio, habitaciones, baños, longitud).
+
+================================================================================
+6. PERFILADO DE CLÚSTERES — LÓGICA DE NOMBRAMIENTO
+================================================================================
+
+6.1. CLUSTERING DE TEXTO (TF-IDF + K-Means, K=5)
+
+Criterio de nombramiento: análisis del vocabulario dominante (top 10 palabras
+por peso TF-IDF), tipo de inmueble dominante y mediana de precio de cada clúster.
+
+  El Clúster 0 se nombró "Venta con Trámites Pendientes" porque el texto enfatiza trámites y documentación (regla, papeles, negocio); el lenguaje sugiere entrega inmediata (fijo); el tipo dominante es apartamento; el precio mediano es bajo (17,000 USD).
+
+  El Clúster 1 se nombró "Anuncios de Agencias" porque el vocabulario dominante incluye términos de agencia (inmobiliaria, agencia, ref); el tipo dominante es apartamento; el precio mediano es alto (110,000 USD); el 97% son anuncios de intermediarios.
+
+  El Clúster 2 se nombró "Apartamentos en Edificio" porque las palabras clave mencionan características de edificio (edificio, listo, capitalista); el tipo dominante es apartamento; el precio mediano es bajo (25,000 USD).
+
+  El Clúster 3 se nombró "Casas Económicas" porque el tipo dominante es casa.
+
+  El Clúster 4 se nombró "Entrega Inmediata" porque las palabras clave mencionan características de edificio (edificio); el lenguaje sugiere entrega inmediata (deja, fijo, cosas); el tipo dominante es apartamento; el precio mediano es bajo (16,000 USD).
+
+6.2. CLUSTERING NUMÉRICO (K-Means, K=óptimo)
+
+Criterio de nombramiento: medianas de precio, habitaciones y baños, más
+porcentaje de anuncios de intermediarios.
+
+  El Clúster numérico 0 se nombró "Viviendas Pequeñas Económicas" porque la mediana de precio es 23,000 USD, con 2.0 habitaciones y 1.0 baños en promedio.
+
+  El Clúster numérico 1 se nombró "Viviendas Medias (Intermediarios)" porque la mediana de precio es 62,500 USD, con 3.0 habitaciones y 2.0 baños en promedio.
+
+  El Clúster numérico 2 se nombró "Viviendas Económicas" porque la mediana de precio es 6,300 USD, con nan habitaciones y 70.0 baños en promedio.
+
+6.3. COMPARACIÓN CON PLAYA
+
+Los perfiles discursivos de La Habana NO son idénticos a los de Playa:
+
+- En La Hay 5 perfiles vs 4 en Playa (la muestra 5x más grande permite más
+  granularidad).
+- Aparece un perfil "Venta con Trámites Pendientes" (vocabulario: regla,
+  papeles, negocio) que no existe en Playa. Refleja la complejidad legal
+  adicional en la capital.
+- El perfil de agencias inmobiliarias está más marcado en La Habana
+  (vocabulario técnico: inmobiliaria, wa, https, ref).
+- Los perfiles de "Entrega Inmediata" (deja, cosas, fijo, split) sugieren
+  un mercado con mayor urgencia de venta en La Habana.
+- Las diferencias de precio entre ambos municipios son significativas:
+  La Habana tiene perfiles económicos más marcados (17k USD mediana) mientras
+  Playa concentra el segmento de lujo (265k USD mediana).
+
+6.4. LIMITACIONES
+
+- K=5 fue seleccionado por Silhouette Score (0.065), un valor bajo que indica
+  que los clústeres de texto no están perfectamente separados. Los nombres
+  son orientativos y deben interpretarse con cautela.
+- El clustering numérico usa K seleccionado también por Silhouette, con
+  características estandarizadas (precio, habitaciones, baños, longitud).
+
+================================================================================
+6. PERFILADO DE CLÚSTERES — LÓGICA DE NOMBRAMIENTO
+================================================================================
+
+6.1. CLUSTERING DE TEXTO (TF-IDF + K-Means, K=5)
+
+Criterio de nombramiento: análisis del vocabulario dominante (top 10 palabras
+por peso TF-IDF), tipo de inmueble dominante y mediana de precio de cada clúster.
+
+  El Clúster 0 se nombró "Venta con Trámites Pendientes" porque el texto enfatiza trámites y documentación (regla, papeles, negocio); el lenguaje sugiere entrega inmediata (fijo); el tipo dominante es apartamento; el precio mediano es bajo (17,000 USD).
+
+  El Clúster 1 se nombró "Anuncios de Agencias" porque el vocabulario dominante incluye términos de agencia (inmobiliaria, agencia, ref); el tipo dominante es apartamento; el precio mediano es alto (110,000 USD); el 97% son anuncios de intermediarios.
+
+  El Clúster 2 se nombró "Apartamentos en Edificio" porque las palabras clave mencionan características de edificio (edificio, listo, capitalista); el tipo dominante es apartamento; el precio mediano es bajo (25,000 USD).
+
+  El Clúster 3 se nombró "Casas Económicas" porque el tipo dominante es casa.
+
+  El Clúster 4 se nombró "Entrega Inmediata" porque las palabras clave mencionan características de edificio (edificio); el lenguaje sugiere entrega inmediata (deja, fijo, cosas); el tipo dominante es apartamento; el precio mediano es bajo (16,000 USD).
+
+6.2. CLUSTERING NUMÉRICO (K-Means, K=óptimo)
+
+Criterio de nombramiento: medianas de precio, habitaciones y baños, más
+porcentaje de anuncios de intermediarios.
+
+  El Clúster numérico 0 se nombró "Viviendas Pequeñas Económicas" porque la mediana de precio es 23,000 USD, con 2.0 habitaciones y 1.0 baños en promedio.
+
+  El Clúster numérico 1 se nombró "Viviendas Medias (Intermediarios)" porque la mediana de precio es 62,500 USD, con 3.0 habitaciones y 2.0 baños en promedio.
+
+  El Clúster numérico 2 se nombró "Viviendas Económicas" porque la mediana de precio es 6,300 USD, con nan habitaciones y 70.0 baños en promedio.
+
+6.3. COMPARACIÓN CON PLAYA
+
+Los perfiles discursivos de La Habana NO son idénticos a los de Playa:
+
+- En La Hay 5 perfiles vs 4 en Playa (la muestra 5x más grande permite más
+  granularidad).
+- Aparece un perfil "Venta con Trámites Pendientes" (vocabulario: regla,
+  papeles, negocio) que no existe en Playa. Refleja la complejidad legal
+  adicional en la capital.
+- El perfil de agencias inmobiliarias está más marcado en La Habana
+  (vocabulario técnico: inmobiliaria, wa, https, ref).
+- Los perfiles de "Entrega Inmediata" (deja, cosas, fijo, split) sugieren
+  un mercado con mayor urgencia de venta en La Habana.
+- Las diferencias de precio entre ambos municipios son significativas:
+  La Habana tiene perfiles económicos más marcados (17k USD mediana) mientras
+  Playa concentra el segmento de lujo (265k USD mediana).
+
+6.4. LIMITACIONES
+
+- K=5 fue seleccionado por Silhouette Score (0.065), un valor bajo que indica
+  que los clústeres de texto no están perfectamente separados. Los nombres
+  son orientativos y deben interpretarse con cautela.
+- El clustering numérico usa K seleccionado también por Silhouette, con
+  características estandarizadas (precio, habitaciones, baños, longitud).
+
+================================================================================
+6. PERFILADO DE CLÚSTERES — LÓGICA DE NOMBRAMIENTO
+================================================================================
+
+6.1. CLUSTERING DE TEXTO (TF-IDF + K-Means, K=5)
+
+Criterio de nombramiento: análisis del vocabulario dominante (top 10 palabras
+por peso TF-IDF), tipo de inmueble dominante y mediana de precio de cada clúster.
+
+  El Clúster 0 se nombró "Venta con Trámites Pendientes" porque el texto enfatiza trámites y documentación (regla, papeles, negocio); el lenguaje sugiere entrega inmediata (fijo); el tipo dominante es apartamento; el precio mediano es bajo (17,000 USD).
+
+  El Clúster 1 se nombró "Anuncios de Agencias" porque el vocabulario dominante incluye términos de agencia (inmobiliaria, agencia, ref); el tipo dominante es apartamento; el precio mediano es alto (110,000 USD); el 97% son anuncios de intermediarios.
+
+  El Clúster 2 se nombró "Apartamentos en Edificio" porque las palabras clave mencionan características de edificio (edificio, listo, capitalista); el tipo dominante es apartamento; el precio mediano es bajo (25,000 USD).
+
+  El Clúster 3 se nombró "Casas Económicas" porque el tipo dominante es casa.
+
+  El Clúster 4 se nombró "Entrega Inmediata" porque las palabras clave mencionan características de edificio (edificio); el lenguaje sugiere entrega inmediata (deja, fijo, cosas); el tipo dominante es apartamento; el precio mediano es bajo (16,000 USD).
+
+6.2. CLUSTERING NUMÉRICO (K-Means, K=óptimo)
+
+Criterio de nombramiento: medianas de precio, habitaciones y baños, más
+porcentaje de anuncios de intermediarios.
+
+  El Clúster numérico 0 se nombró "Viviendas Pequeñas Económicas" porque la mediana de precio es 23,000 USD, con 2.0 habitaciones y 1.0 baños en promedio.
+
+  El Clúster numérico 1 se nombró "Viviendas Medias (Intermediarios)" porque la mediana de precio es 62,500 USD, con 3.0 habitaciones y 2.0 baños en promedio.
+
+  El Clúster numérico 2 se nombró "Viviendas Económicas" porque la mediana de precio es 6,300 USD, con nan habitaciones y 70.0 baños en promedio.
+
+6.3. COMPARACIÓN CON PLAYA
+
+Los perfiles discursivos de La Habana NO son idénticos a los de Playa:
+
+- En La Hay 5 perfiles vs 4 en Playa (la muestra 5x más grande permite más
+  granularidad).
+- Aparece un perfil "Venta con Trámites Pendientes" (vocabulario: regla,
+  papeles, negocio) que no existe en Playa. Refleja la complejidad legal
+  adicional en la capital.
+- El perfil de agencias inmobiliarias está más marcado en La Habana
+  (vocabulario técnico: inmobiliaria, wa, https, ref).
+- Los perfiles de "Entrega Inmediata" (deja, cosas, fijo, split) sugieren
+  un mercado con mayor urgencia de venta en La Habana.
+- Las diferencias de precio entre ambos municipios son significativas:
+  La Habana tiene perfiles económicos más marcados (17k USD mediana) mientras
+  Playa concentra el segmento de lujo (265k USD mediana).
+
+6.4. LIMITACIONES
+
+- K=5 fue seleccionado por Silhouette Score (0.065), un valor bajo que indica
+  que los clústeres de texto no están perfectamente separados. Los nombres
+  son orientativos y deben interpretarse con cautela.
+- El clustering numérico usa K seleccionado también por Silhouette, con
+  características estandarizadas (precio, habitaciones, baños, longitud).
