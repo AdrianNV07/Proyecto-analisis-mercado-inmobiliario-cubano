@@ -1,0 +1,1 @@
+"El mercado digital dice que nadie emigra, la calle dice lo contrario. Este proyecto cruza anuncios de Revolico, redes sociales, agencias online y entrevistas callejeras para revelar cómo la crisis migratoria está reescribiendo las reglas del mercado inmobiliario en Playa"
