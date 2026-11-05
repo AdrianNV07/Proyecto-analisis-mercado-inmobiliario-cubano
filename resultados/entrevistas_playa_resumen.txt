@@ -1,0 +1,64 @@
+==============================================================================
+RESUMEN — ENTREVISTAS CALLEJERAS DE PLAYA (PILAR 4)
+==============================================================================
+n = 30 entrevistas. Muestra no probabilistica: los resultados
+describen a las personas entrevistadas, no a la poblacion de Playa.
+
+1) MOTIVO DE VENTA
+------------------------------------------------------------------------------
+  Otro             11  ( 36.7 %)
+  Migración        10  ( 33.3 %)
+  Sin respuesta     5  ( 16.7 %)
+  Económico         4  ( 13.3 %)
+
+  Migración sobre el total:        10/30 = 33.3 %
+  Migración entre quienes respondieron: 10/25 = 40.0 %
+  Contraste con Revolico: 0/135 anuncios (0.0 %) verbalizan la migración.
+
+2) MARGEN DE NEGOCIACION  (precio_lista - precio_minimo) / precio_lista
+------------------------------------------------------------------------------
+  Migración:        n=10  promedio= 3.13 %  mediana= 0.00 %
+  No migración:     n=14  promedio= 1.42 %  mediana= 0.00 %
+  Sin respuesta:    n= 5  promedio= 5.40 %  mediana= 5.71 %
+
+  Nota: 'no acepto menos' se registra como margen 0 porque el minimo
+  declarado coincide con el precio pedido. Un caso sin precio minimo
+  (entrevista #3) queda fuera del calculo.
+
+3) PROBLEMAS OCULTOS
+------------------------------------------------------------------------------
+  Ocultó problemas en el anuncio: 3/30 = 10.0 %
+  Entre quienes declararon algún problema: 3/4 = 75.0 %
+
+4) USO DE INTERMEDIARIO
+------------------------------------------------------------------------------
+  Usa intermediario: 11/30 = 36.7 %
+
+5) RAZONES PARA PREFERIR PLAYA  (respuesta abierta, multietiqueta)
+------------------------------------------------------------------------------
+  Tranquilidad               14/30  ( 46.7 %)
+  Belleza                    12/30  ( 40.0 %)
+  Desarrollo económico        9/30  ( 30.0 %)
+  Servicios                   6/30  ( 20.0 %)
+  Céntrico                    5/30  ( 16.7 %)
+  Comercio                    3/30  ( 10.0 %)
+  Oportunidades laborales     3/30  ( 10.0 %)
+  Embajadas                   2/30  (  6.7 %)
+  Emprendimientos             2/30  (  6.7 %)
+  Inespecífico                1/30  (  3.3 %)
+  Ocio                        1/30  (  3.3 %)
+
+  Top 3:
+    1. Tranquilidad — 14/30 (46.7 %)
+    2. Belleza — 12/30 (40.0 %)
+    3. Desarrollo económico — 9/30 (30.0 %)
+
+  Multietiqueta: una misma respuesta puede aportar a varios temas, por
+  lo que los porcentajes no suman 100 %.
+
+6) MIGRACIÓN EN EL ANUNCIO
+------------------------------------------------------------------------------
+  Vendedores con motivo migración: 10
+  De ellos, dijeron haberlo puesto en el anuncio: 0
+  De ellos, dijeron NO haberlo puesto: 10
+
