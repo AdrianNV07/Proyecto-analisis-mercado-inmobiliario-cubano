@@ -1,0 +1,53 @@
+====================================================================================
+COBERTURA GEOGRAFICA DE LOS ANUNCIOS DE PLAYA
+====================================================================================
+Dataset: data/processed/dataset_unificado.csv
+Total  : 135 anuncios  (Revolico 105 | Redes 30)
+
+HALLAZGO PRINCIPAL
+------------------------------------------------------------------------------------
+Los anuncios de redes sociales identifican su barrio en el 76.7% de los
+casos, frente al 23.8% de Revolico: son 3.2 veces mas precisos en ubicacion.
+Un anuncio de grupo de compraventa empieza por el barrio porque el vendedor
+lo dice para atraer compradores locales. Un anuncio de Revolico lo omite
+cuando la descripcion es larga.
+
+fuente         n  con barrio  sin barrio   precisión
+------------------------------------------------------------------------------------
+Revolico     105          25          80       23.8%
+Redes         30          23           7       76.7%
+------------------------------------------------------------------------------------
+TOTAL        135          48          87
+
+  Ratio de precisión: 3.2x a favor de las redes sociales
+
+DISTRIBUCION DE BARRIOS POR FUENTE
+------------------------------------------------------------------------------------
+barrio                     Revolico    Redes  canal             
+------------------------------------------------------------------------------------
+Atabey                            1        0  solo Revolico     
+Buenavista                        0        6  solo redes        
+Flores                            0        1  solo redes        
+Fontanar                          0        1  solo redes        
+Juan Manuel Márquez               0        1  solo redes        
+Kohly                             3        1  ambos             
+La Ceiba                          0        3  solo redes        
+La Corbata                        0        1  solo redes        
+Miramar                          11        5  ambos             
+Querejeta                         0        1  solo redes        
+Reparto Náutico                   1        1  ambos             
+Santa Fe                          4        0  solo Revolico     
+Siboney                           5        1  ambos             
+Sierra                            0        1  solo redes        
+------------------------------------------------------------------------------------
+  Barrios en ambos canales : 4  ['Kohly', 'Miramar', 'Reparto Náutico', 'Siboney']
+  Solo en Revolico          : 2  ['Atabey', 'Santa Fe']
+  Solo en redes             : 8  ['Buenavista', 'Flores', 'Fontanar', 'Juan Manuel Márquez', 'La Ceiba', 'La Corbata', 'Querejeta', 'Sierra']
+
+LIMITACION
+------------------------------------------------------------------------------------
+Solo 4 de los 14 barrios documentados aparecen en ambos canales, y en la
+mayoria de ellos una de las dos fuentes tiene n=1. La comparacion de precios
+por barrio entre canales NO es estadisticamente viable. El hallazgo
+defendible es la cobertura geografica, no la comparacion de precios.
+====================================================================================

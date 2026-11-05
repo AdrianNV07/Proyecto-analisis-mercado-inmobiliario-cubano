@@ -1,0 +1,218 @@
+==============================================================================
+CLUSTERING DE TEXTO DE LA HABANA (TF-IDF + K-Means)
+==============================================================================
+Origen: data\processed\habana_limpio.jsonl  (515 anuncios)
+Municipios: 16
+
+1) LIMPIEZA DE TEXTO
+------------------------------------------------------------------------------
+  longitud media : 82 palabras por anuncio
+  longitud mín/máx: 0 / 403
+  documentos vacíos tras limpiar: 4
+
+2) VECTORIZACIÓN TF-IDF
+------------------------------------------------------------------------------
+  documentos: 515
+  términos  : 100  (max_features=100, min_df=2)
+  bigramas incluidos: ngram_range=(1, 2)
+  densidad: 0.1337
+
+3) K-MEANS — selección por Silhouette Score
+------------------------------------------------------------------------------
+  K=3: silhouette=0.0521  inercia=395.91  tamaños={0: np.int64(53), 1: np.int64(427), 2: np.int64(35)}
+  K=4: silhouette=0.0579  inercia=384.34  tamaños={0: np.int64(51), 1: np.int64(35), 2: np.int64(191), 3: np.int64(238)}
+  K=5: silhouette=0.0649  inercia=375.42  tamaños={0: np.int64(57), 1: np.int64(35), 2: np.int64(51), 3: np.int64(225), 4: np.int64(147)}
+
+  K óptimo por silhouette: K = 5  (score=0.0649)
+
+4) TOP 10 PALABRAS POR CLÚSTER (peso en el centroide)
+==============================================================================
+
+  CLUSTER 0  (n=57, 11.1% del total)
+  término                            peso
+  ----------------------------------------
+  regla                            0.2669
+  papeles                          0.2470
+  papeles regla                    0.2469
+  apartamento                      0.0958
+  casa                             0.0907
+  negocio                          0.0880
+  cocina                           0.0873
+  cuenta                           0.0778
+  fijo                             0.0746
+  lista                            0.0745
+
+    tipo más común  : apartamento
+    precio mediana  : 17,000 USD
+    palabras prom.  : 100
+    con urgencia    : 1.8%
+    con problemas   : 1.8%
+
+  CLUSTER 1  (n=35, 6.8% del total)
+  término                            peso
+  ----------------------------------------
+  inmobiliaria                     0.2293
+  cuba                             0.2283
+  tanque motor                     0.1943
+  tipo                             0.1917
+  cisterna tanque                  0.1892
+  agencia                          0.1888
+  ref                              0.1863
+  independencia                    0.1808
+  https wa                         0.1761
+  wa                               0.1741
+
+    tipo más común  : apartamento
+    precio mediana  : 110,000 USD
+    palabras prom.  : 126
+    con urgencia    : 0.0%
+    con problemas   : 0.0%
+
+  CLUSTER 2  (n=51, 9.9% del total)
+  término                            peso
+  ----------------------------------------
+  edificio capitalista             0.2827
+  edificio                         0.2683
+  listo                            0.2654
+  capitalista                      0.2635
+  cocina                           0.1521
+  apto                             0.1132
+  grande                           0.1129
+  buena                            0.1048
+  servicio                         0.0888
+  vedado                           0.0702
+
+    tipo más común  : apartamento
+    precio mediana  : 25,000 USD
+    palabras prom.  : 45
+    con urgencia    : 0.0%
+    con problemas   : 0.0%
+
+  CLUSTER 3  (n=225, 43.7% del total)
+  término                            peso
+  ----------------------------------------
+  casa                             0.1670
+  independiente                    0.0983
+  cocina                           0.0930
+  libre                            0.0700
+  cisterna                         0.0642
+  propiedad                        0.0606
+  entrada                          0.0602
+  amplia                           0.0578
+  playa                            0.0561
+  grande                           0.0548
+
+    tipo más común  : casa
+    precio mediana  : 30,000 USD
+    palabras prom.  : 94
+    con urgencia    : 6.2%
+    con problemas   : 3.1%
+
+  CLUSTER 4  (n=147, 28.5% del total)
+  término                            peso
+  ----------------------------------------
+  apartamento                      0.1781
+  cocina                           0.1322
+  deja                             0.0908
+  fijo                             0.0731
+  cosas                            0.0716
+  edificio                         0.0701
+  centro                           0.0675
+  vedado                           0.0666
+  split                            0.0657
+  nuevo                            0.0618
+
+    tipo más común  : apartamento
+    precio mediana  : 16,000 USD
+    palabras prom.  : 96
+    con urgencia    : 3.4%
+    con problemas   : 2.7%
+
+5) PCA 2D
+------------------------------------------------------------------------------
+  PC1: 6.1%   PC2: 5.3%   total: 11.4%
+  Gráfico guardado: graficos\clusters_texto_habana.png
+
+6) CONCENTRACIÓN POR MUNICIPIO Y CLÚSTER
+------------------------------------------------------------------------------
+  Conteo absoluto:
+  cluster_texto           0   1   2   3   4
+municipio                                
+Arroyo Naranjo          5   0   0  20   7
+Boyeros                 2   4   0  10   4
+Centro Habana           4   0  12  28  32
+Cerro                   3   1   1  17  15
+Cotorro                 0   0   0   2   1
+Diez De Octubre         5   2   1  36  11
+Guanabacoa              5   0   0   2   0
+Habana Del Este         7   1   0  15  11
+Habana Vieja            7   0   0  10   8
+La Lisa                 0   1   0   6   2
+Marianao                1   0   1   4   4
+No identificado         0   0   0   2   1
+Playa                   8  16  17  47  18
+Plaza de la Revolucion  8  10  19  26  31
+Regla                   1   0   0   0   0
+San Miguel Del Padron   1   0   0   0   2
+
+  Porcentaje dentro de cada municipio:
+  cluster_texto               0     1     2     3     4
+municipio                                            
+Arroyo Naranjo           15.6   0.0   0.0  62.5  21.9
+Boyeros                  10.0  20.0   0.0  50.0  20.0
+Centro Habana             5.3   0.0  15.8  36.8  42.1
+Cerro                     8.1   2.7   2.7  45.9  40.5
+Cotorro                   0.0   0.0   0.0  66.7  33.3
+Diez De Octubre           9.1   3.6   1.8  65.5  20.0
+Guanabacoa               71.4   0.0   0.0  28.6   0.0
+Habana Del Este          20.6   2.9   0.0  44.1  32.4
+Habana Vieja             28.0   0.0   0.0  40.0  32.0
+La Lisa                   0.0  11.1   0.0  66.7  22.2
+Marianao                 10.0   0.0  10.0  40.0  40.0
+No identificado           0.0   0.0   0.0  66.7  33.3
+Playa                     7.5  15.1  16.0  44.3  17.0
+Plaza de la Revolucion    8.5  10.6  20.2  27.7  33.0
+Regla                   100.0   0.0   0.0   0.0   0.0
+San Miguel Del Padron    33.3   0.0   0.0   0.0  66.7
+
+  Gráfico guardado: graficos\clusters_texto_habana_municipios.png
+
+7) INTERPRETACIÓN
+==============================================================================
+
+  Cluster 0: n=57
+    Vocabulario dominante : regla, papeles, papeles regla, apartamento
+    Tipo de inmueble      : apartamento
+    Precio mediana        : 17,000 USD
+    Segmentos de mercado  : {'popular': np.int64(46), 'medio': np.int64(9), 'lujo': np.int64(2)}
+    Municipios principales: {'Playa': np.int64(8), 'Plaza de la Revolucion': np.int64(8), 'Habana Del Este': np.int64(7)}
+
+  Cluster 1: n=35
+    Vocabulario dominante : inmobiliaria, cuba, tanque motor, tipo
+    Tipo de inmueble      : apartamento
+    Precio mediana        : 110,000 USD
+    Segmentos de mercado  : {'medio': np.int64(20), 'popular': np.int64(6), 'lujo': np.int64(5), 'lujo_top': np.int64(4)}
+    Municipios principales: {'Playa': np.int64(16), 'Plaza de la Revolucion': np.int64(10), 'Boyeros': np.int64(4)}
+
+  Cluster 2: n=51
+    Vocabulario dominante : edificio capitalista, edificio, listo, capitalista
+    Tipo de inmueble      : apartamento
+    Precio mediana        : 25,000 USD
+    Segmentos de mercado  : {'popular': np.int64(44), 'medio': np.int64(7)}
+    Municipios principales: {'Plaza de la Revolucion': np.int64(19), 'Playa': np.int64(17), 'Centro Habana': np.int64(12)}
+
+  Cluster 3: n=225
+    Vocabulario dominante : casa, independiente, cocina, libre
+    Tipo de inmueble      : casa
+    Precio mediana        : 30,000 USD
+    Segmentos de mercado  : {'popular': np.int64(138), 'medio': np.int64(70), 'lujo': np.int64(10), 'lujo_top': np.int64(7)}
+    Municipios principales: {'Playa': np.int64(47), 'Diez De Octubre': np.int64(36), 'Centro Habana': np.int64(28)}
+
+  Cluster 4: n=147
+    Vocabulario dominante : apartamento, cocina, deja, fijo
+    Tipo de inmueble      : apartamento
+    Precio mediana        : 16,000 USD
+    Segmentos de mercado  : {'popular': np.int64(136), 'medio': np.int64(10), 'lujo': np.int64(1)}
+    Municipios principales: {'Centro Habana': np.int64(32), 'Plaza de la Revolucion': np.int64(31), 'Playa': np.int64(18)}
+
+==============================================================================

@@ -1,0 +1,294 @@
+================================================================================
+ANÁLISIS DE ENTREVISTAS CALLEJERAS — MUNICIPIO DE PLAYA (PILAR 4)
+================================================================================
+Generado: 2026-11-04
+Fuente: Entrevistas.docx (30 entrevistas, cuestionario de 23 preguntas)
+Datos: data\raw\entrevistas_playa.jsonl
+
+1. FICHA TÉCNICA
+--------------------------------------------------------------------------------
+  Universo:        vendedores de inmuebles residenciales en el municipio de Playa.
+  Muestra:         30 entrevistas, selección no probabilística por conveniencia
+                   (entrevistas callejeras).
+  Unidad:          vivienda ofrecida en venta.
+  Instrumento:     cuestionario mixto de 23 preguntas (cerradas y abiertas).
+  Período:         no registrado en la transcripción.
+  Alcance:         municipio de Playa, La Habana. Estudio de caso.
+
+  ADVERTENCIA: la muestra no es probabilística. Los porcentajes describen
+  a las 30 personas entrevistadas, no a la población de Playa. No deben
+  presentarse como prevalencias poblacionales ni usarse para inferencia
+  estadística formal.
+
+2. PERFIL DE LA MUESTRA
+--------------------------------------------------------------------------------
+  Barrios declarados (n=30):
+    La Sierra                     7  (23.3 %)
+    Buena Vista                   6  (20.0 %)
+    Miramar                       6  (20.0 %)
+    Ampliación Almendares         4  (13.3 %)
+    Náutico                       2  (6.7 %)
+    Siboney                       2  (6.7 %)
+    Juan Manuel Márquez           1  (3.3 %)
+    Querejeta                     1  (3.3 %)
+    Santa Fe                      1  (3.3 %)
+
+  Tipo de inmueble:
+    Casa                         21  (70.0 %)
+    Apartamento                   9  (30.0 %)
+
+  Estado declarado:
+    Excelente                     2  (6.7 %)
+    Bueno                        25  (83.3 %)
+    Regular                       3  (10.0 %)
+
+  Papeles en regla:
+    Sí                           29  (96.7 %)
+    No                            1  (3.3 %)
+
+  Precio de lista (USD, n=30):
+    Mediana 37,500 | Media 87,467 | Mínimo 7,000 | Máximo 600,000
+
+  Superficie declarada (m², n=28 de 30):
+    Mediana 78.0 | Media 167.8 | Mínimo 38.0 | Máximo 948.0
+
+  Precio por m² (USD/m², n=28):
+    Mediana 369.1 | Media 434.9 | Mínimo 162.8 | Máximo 892.9
+
+3. MOTIVO DE VENTA
+--------------------------------------------------------------------------------
+  Distribución (n=30):
+    Categoría                n         %
+    Migración               10    33.3 %
+    Otro                    11    36.7 %
+    Económico                4    13.3 %
+    Sin respuesta            5    16.7 %
+
+  Migración sobre el total:              10/30 = 33.3 %
+  Migración entre quienes respondieron:  10/25 = 40.0 %
+
+  CONTRASTE CON REVOLICO (Pilar 1):
+    En 135 anuncios de Playa ningún texto verbaliza la migración (0.0 %).
+    En las entrevistas, 10 de 30 vendedores la declaran como motivo.
+    La diferencia no se explica por falta de cobertura: 28/30 entrevistados
+    publicaron en Revolico (ver sección 8).
+
+  ¿Lo puso en el anuncio? De los 10 vendedores migrantes:
+    Sí: 0   No: 10   Sin dato: 0
+
+  Razones declaradas para no ponerlo (n=10, respuesta codificada):
+    Pérdida de poder de negociación                       4  (40.0 %)
+    No es de interés del comprador                        3  (30.0 %)
+    Norma informal / no tiene sentido en el anuncio       2  (20.0 %)
+    Privacidad                                            1  (10.0 %)
+
+  Interpretación: la omisión es estratégica. El argumento más frecuente
+  es que declarar la migración resta poder de negociación o proyecta
+  desesperación, no que el dato sea irrelevante.
+
+4. MARGEN DE NEGOCIACIÓN
+--------------------------------------------------------------------------------
+  Definición: (precio_lista - precio_minimo) / precio_lista × 100.
+  Interpretación: a menor margen, menor disposición a rebajar y —bajo el
+  supuesto del estudio— mayor urgencia de venta.
+
+  Grupo                                n     Media   Mediana    Mín.    Máx.
+  Migración                           10     3.13%     0.00%   0.00%  14.29%
+  No migración (Económico + Otro)     14     1.42%     0.00%   0.00%  10.00%
+  Sin respuesta                        5     5.40%     5.71%   0.00%   9.38%
+
+  Casos con margen 0 ('no acepto menos'): 17/29 = 58.6 %
+  Estos casos se mantienen en el cálculo principal con margen 0: el
+  vendedor declara que su mínimo es el precio pedido, no que falte el dato.
+
+  CÁLCULO DE ROBUSTEZ (solo casos con margen > 0):
+    Migración                          n=4  media=7.82%  mediana=6.12%
+    No migración (Económico + Otro)    n=4  media=4.96%  mediana=3.91%
+
+  Lectura: la media principal (3.13 % vs 1.42 %) está comprimida por los
+  muchos casos con margen 0. Al excluirlos, la brecha persiste y se amplía
+  (7.82 % vs 4.96 %), pero cada grupo queda con solo 4 casos: el resultado
+  es descriptivo y no admite inferencia.
+
+5. PROBLEMAS OCULTOS Y TRANSPARENCIA
+--------------------------------------------------------------------------------
+  Ocultó problemas en el anuncio: 3/30 = 10.0 %
+
+  Casos con problema declarado (n=4):
+     #  Problema                                       ¿En el anuncio?  Transparencia  
+     1  Agua irregular                                 No               Sí siempre     
+    10  Techo de un cuarto en mal estado               Sí               Sin dato       
+    18  Agua irregular                                 No               Sí siempre     
+    21  Pequeñas filtraciones                          No               Sí siempre     
+
+  Entre quienes declararon un problema: 3/4 = 75.0 %
+  De los 3 que ocultaron el problema, los 3 afirman que lo comunican
+  verbalmente al comprador: la omisión es del anuncio, no de la relación
+  de venta. El n=3 es anecdótico.
+
+6. USO DE INTERMEDIARIO
+--------------------------------------------------------------------------------
+  Usa intermediario: 11/30 = 36.7 %
+
+  Cruce exploratorio con el motivo de venta:
+    Migración:     1/10 = 10.0 %
+    No migración:  8/15 = 53.3 %
+
+  Lectura: los vendedores que emigran recurren menos a intermediarios.
+  Con n=10 y n=15 el dato es exploratorio; no se controla por precio,
+  tipo de inmueble ni barrio.
+
+7. RAZONES PARA PREFERIR PLAYA
+--------------------------------------------------------------------------------
+  Pregunta abierta (Q22), codificada en temas. Una respuesta puede
+  aportar a varios temas, por lo que los porcentajes no suman 100 %.
+
+  Tema                         n         %
+  Tranquilidad                14    46.7 %
+  Belleza                     12    40.0 %
+  Desarrollo económico         9    30.0 %
+  Servicios                    6    20.0 %
+  Céntrico                     5    16.7 %
+  Comercio                     3    10.0 %
+  Oportunidades laborales      3    10.0 %
+  Embajadas                    2     6.7 %
+  Emprendimientos              2     6.7 %
+  Inespecífico                 1     3.3 %
+  Ocio                         1     3.3 %
+
+  TOP 3:
+    1. Tranquilidad — 14/30 (46.7 %)
+    2. Belleza — 12/30 (40.0 %)
+    3. Desarrollo económico — 9/30 (30.0 %)
+
+  Lectura: la preferencia por Playa se explica por atributos de calidad
+  de vida (tranquilidad y belleza) más que por una narrativa migratoria.
+  El desarrollo económico aparece tercero, con 9 menciones.
+
+8. CANALES DE PUBLICACIÓN
+--------------------------------------------------------------------------------
+  Canal            n         %
+  Revolico        28    93.3 %
+  Facebook        26    86.7 %
+  Telegram        16    53.3 %
+  WhatsApp        15    50.0 %
+  Instagram        1     3.3 %
+
+  Nota: los canales no son excluyentes; un mismo anuncio puede estar en
+  varios. El 93.3 % publicó en Revolico, de modo que la ausencia de
+  migración en los anuncios no se debe a que la muestra no use Revolico.
+
+9. PRECIO POR M² SEGÚN MOTIVO (EXPLORATORIO)
+--------------------------------------------------------------------------------
+  Grupo                                n   Mediana USD/m²
+  Migración                            9           312.5
+  No migración (Económico + Otro)     14           479.0
+  Sin respuesta                        5           571.6
+
+  No se ajusta por tamaño, tipo de inmueble ni barrio. Con estos n, la
+  tabla solo orienta; no permite atribuir diferencias al motivo de venta.
+
+10. SÍNTESIS PARA EL CAPÍTULO DE RESULTADOS
+--------------------------------------------------------------------------------
+  1. Migración: 33.3 % de los entrevistados (10/30) declara que emigra;
+     entre quienes respondieron, 40.0 % (10/25). En Revolico, 0/135.
+  2. Invisibilidad estratégica: 10/10 vendedores migrantes omitieron la
+     migración en el anuncio, sobre todo para no perder poder de
+     negociación.
+  3. Margen: 3.13 % (migración) vs 1.42 % (no migración); mediana 0 en
+     ambos. Robustez: 7.82 % vs 4.96 % al excluir los márgenes 0.
+  4. Problemas ocultos: 10.0 % del total (3/30); 75.0 % de quienes
+     declararon un problema (3/4). Los 3 dicen comunicarlo verbalmente.
+  5. Intermediarios: 36.7 % (11/30); 10.0 % entre migrantes y 53.3 %
+     entre no migrantes (exploratorio).
+  6. Playa: tranquilidad (46.7 %), belleza (40.0 %) y desarrollo
+     económico (30.0 %) son las razones principales.
+
+11. LIMITACIONES
+--------------------------------------------------------------------------------
+  - Muestra no probabilística por conveniencia (n=30). No representa a
+    la población de Playa ni permite extrapolar a otros municipios.
+  - Entrevistas callejeras: posible sesgo de selección y de deseabilidad
+    social, sobre todo en preguntas sobre ocultamiento de problemas.
+  - Período de recolección no registrado en la transcripción.
+  - Subgrupos pequeños (migración n=10; económico n=4; por barrio n=1-7):
+    las comparaciones son descriptivas, no inferenciales.
+  - 'No acepto menos' se codifica como margen 0; es un supuesto del
+    estudio, documentado y acompañado del cálculo de robustez.
+  - La muestra mezcla casas y apartamentos de tamaños y barrios muy
+    distintos; el precio por m² no está ajustado por esas variables.
+  - Los datos son autodeclarados: no se verificaron precios, papeles ni
+    problemas con documentación externa.
+
+12. ANEXO — REGISTROS DE LA MUESTRA
+--------------------------------------------------------------------------------
+   #  Barrio                   Motivo         Lista    Mínimo  Margen Ocultó Interm.
+   1  Náutico                  Migración     11,000    11,000    0.00     Sí      No
+   2  Buena Vista              Otro          13,000    13,000    0.00     No      No
+   3  Náutico                  Otro          35,000         —       —     No      Sí
+   4  Juan Manuel Márquez      s/r          160,000   145,000    9.38     No      Sí
+   5  Siboney                  Otro         600,000   580,000    3.33     No      Sí
+   6  La Sierra                Migración     15,000    14,000    6.67     No      No
+   7  Buena Vista              Migración      7,000     6,000   14.29     No      No
+   8  Miramar                  Otro          89,000    85,000    4.49     No      Sí
+   9  Buena Vista              Otro           7,000     7,000    0.00     No      No
+  10  La Sierra                Migración    105,000   100,000    4.76     No      No
+  11  Ampliación Almendares    Otro         110,000   110,000    0.00     No      Sí
+  12  Miramar                  s/r          105,000   100,000    4.76     No      Sí
+  13  Ampliación Almendares    Migración     65,000    65,000    0.00     No      Sí
+  14  Miramar                  s/r           70,000    65,000    7.14     No      No
+  15  Buena Vista              Otro          25,000    25,000    0.00     No      No
+  16  La Sierra                s/r           27,000    27,000    0.00     No      No
+  17  Buena Vista              Migración     40,000    40,000    0.00     No      No
+  18  Siboney                  Migración     35,000    35,000    0.00     Sí      No
+  19  La Sierra                Económico    200,000   180,000   10.00     No      No
+  20  La Sierra                s/r           35,000    33,000    5.71     No      No
+  21  Buena Vista              Otro          12,000    12,000    0.00     Sí      No
+  22  Ampliación Almendares    Migración     18,000    17,000    5.56     No      No
+  23  Ampliación Almendares    Migración     20,000    20,000    0.00     No      No
+  24  Querejeta                Económico     15,000    15,000    0.00     No      No
+  25  La Sierra                Económico     45,000    45,000    0.00     No      Sí
+  26  Miramar                  Otro          90,000    90,000    0.00     No      Sí
+  27  Miramar                  Económico    500,000   490,000    2.00     No      Sí
+  28  La Sierra                Otro         100,000   100,000    0.00     No      No
+  29  Miramar                  Migración     25,000    25,000    0.00     No      No
+  30  Santa Fe                 Otro          45,000    45,000    0.00     No      Sí
+
+  s/r = sin respuesta. Los valores monetarios están en USD.
+
+13. ANEXO — CITAS TEXTUALES SOBRE LA INVISIBILIDAD MIGRATORIA
+--------------------------------------------------------------------------------
+  Fragmentos literales de los 10 vendedores con motivo Migración que
+  explicaron por qué no incluyeron la emigración en el anuncio.
+  Campo del JSONL: razon_por_que_no_lo_puso.
+
+  #01 — Náutico (Casa)
+      «No lo puse, porque eso no es de interés del comprador»
+
+  #06 — La Sierra (Apartamento)
+      «No es algo que se ponga en los anuncios»
+
+  #07 — Buena Vista (Apartamento)
+      «No es de interés de nadie, además de que las personas van a pensar que estoy desesperado y no van a querer pagar lo que pido por la casa»
+
+  #10 — La Sierra (Casa)
+      «No, en primer lugar no es de interés publico y en segundo lugar pierdo poder de negociación»
+
+  #13 — Ampliación Almendares (Casa)
+      «Eso no es de interés publico, además de que pierdo poder en la negociación si se conoce»
+
+  #17 — Buena Vista (Casa)
+      «No tiene sentido poner eso en el anuncio»
+
+  #18 — Siboney (Casa)
+      «No es de interés del comprador, además de que me da desventaja en la negociación»
+
+  #22 — Ampliación Almendares (Casa)
+      «Es algo privado que no tengo por que poner en el anuncio»
+
+  #23 — Ampliación Almendares (Apartamento)
+      «No es de interés del comprador»
+
+  #29 — Miramar (Apartamento)
+      «No es de interés de los compradores»
+

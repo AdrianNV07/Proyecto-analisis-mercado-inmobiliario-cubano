@@ -1,0 +1,165 @@
+========================================================================================
+INFORME COMPARATIVO: LA HABANA vs. PLAYA
+========================================================================================
+La Habana :  515 anuncios   (Pilar 1, toda la ciudad)
+Playa     :  105 anuncios   (caso de estudio)
+
+Nota: Playa dentro del dataset de La Habana son 106 anuncios;
+el conjunto de Playa (105) proviene de la limpieza con filtros adicionales.
+
+========================================================================================
+1. MEDIANAS COMPARATIVAS POR SEGMENTO DE MERCADO
+========================================================================================
+Segmentos de La Habana: popular <50k, medio 50-200k, lujo 200-500k, lujo_top >500k
+Segmentos de Playa    : popular <70k, medio 70-200k, lujo >200k   (umbrales distintos)
+
+segmento        n_Habana   med_Habana   n_Playa    med_Playa   diferencia
+----------------------------------------------------------------------------------------
+popular              370       17,000        59       23,000       +35.3%
+medio                116       80,000        27      100,000       +25.0%
+lujo                  18      265,000        19      490,000       +84.9%
+lujo_top              11      600,000         0           --           --
+----------------------------------------------------------------------------------------
+  Los umbrales no son homologables entre ambos conjuntos: 'popular' en La
+  Habana llega hasta 50k y en Playa hasta 70k. La comparación directa de
+  ese segmento no es válida.
+
+grupo                       n      mediana     promedio        min          max
+----------------------------------------------------------------------------------------
+La Habana (todos)         515       25,000       61,648      1,000    2,200,000
+Playa (todos)             105       45,000      126,775      1,100    1,000,000
+
+========================================================================================
+2. PRECIOS DE APARTAMENTOS
+========================================================================================
+conjunto                    n      mediana     promedio        min          max
+----------------------------------------------------------------------------------------
+La Habana                 241       25,000       36,797      2,000      500,000
+  de ellas Playa           44       25,000       57,614      5,000      500,000
+Playa                      44       25,000       57,614      5,000      500,000
+
+========================================================================================
+3. INTERMEDIARIOS (es_intermediario)
+========================================================================================
+conjunto                    n   partic.   interm.   % int.    med_part     med_int       dif
+----------------------------------------------------------------------------------------
+La Habana                 515       431        84    16.3%      24,000      52,500     +119%
+Playa                     105        75        30    28.6%      37,000      97,500     +164%
+
+  Playa concentra mas intermediarios que el resto de la ciudad: es un
+  municipio con mayor actividad inmobiliaria formal.
+
+========================================================================================
+4. DISTRIBUCIÓN DE TIPO DE INMUEBLE
+========================================================================================
+tipo                n_Hab    %Hab  n_Playa   %Playa  grafico                       
+----------------------------------------------------------------------------------------
+apartamento           241   46.8%       44    41.9%  #############
+casa                  121   23.5%       29    27.6%  #######
+habitacion             92   17.9%       22    21.0%  #####
+local                  31    6.0%        4     3.8%  ##
+otro                   10    1.9%        2     1.9%  #
+solar                  20    3.9%        4     3.8%  #
+----------------------------------------------------------------------------------------
+TOTAL                 515  100.0%      105   100.0%
+
+========================================================================================
+5. DISTRIBUCIÓN DE MUNICIPIOS EN LA HABANA
+========================================================================================
+municipio                     n       %       mediana    % int.
+----------------------------------------------------------------------------------------
+Playa                       106   20.6%        46,500     28.3%
+otro                         97   18.8%        35,000     15.5%
+Centro Habana                76   14.8%        17,000     11.8%
+Diez De Octubre              55   10.7%        30,000     14.5%
+Cerro                        37    7.2%        25,000      2.7%
+Habana Del Este              34    6.6%        30,000     11.8%
+Arroyo Naranjo               32    6.2%        15,000      9.4%
+Habana Vieja                 25    4.9%        15,000     12.0%
+Boyeros                      20    3.9%        20,000     45.0%
+Marianao                     10    1.9%        26,500     10.0%
+La Lisa                       9    1.7%        16,500     11.1%
+Guanabacoa                    7    1.4%         8,500      0.0%
+Cotorro                       3    0.6%        35,000      0.0%
+San Miguel Del Padron         3    0.6%         3,500      0.0%
+Regla                         1    0.2%        10,000      0.0%
+----------------------------------------------------------------------------------------
+
+========================================================================================
+6. CONCENTRACIÓN GEOGRÁFICA EN PLAYA (barrios)
+========================================================================================
+barrio                     n       %       mediana
+----------------------------------------------------------------------------------------
+Vedado                    71   56.3%        40,000
+Miramar                   12    9.5%       130,000
+Habana del Este           12    9.5%        27,500
+Santa Fe                   7    5.6%       120,000
+Alamar                     7    5.6%         6,000
+Siboney                    6    4.8%       590,000
+Guanabacoa                 5    4.0%         8,500
+Kohly                      3    2.4%       500,000
+Reparto Náutico            1    0.8%        70,000
+Atabey                     1    0.8%        70,000
+Buenavista                 1    0.8%        20,000
+----------------------------------------------------------------------------------------
+  con barrio conocido: 126/515 (24.5%)
+
+========================================================================================
+7. INTERPRETACIÓN
+========================================================================================
+
+SOBRE LA DIFERENCIA DE PRECIOS
+----------------------------------------------------------------------------------------
+  La mediana general de Playa (45,000 USD) es +80.0% respecto
+  a la de La Habana (25,000 USD). La diferencia es notable pero no
+  explica por si sola la jerarquia habitacional de la ciudad.
+
+  La razon principal es la composicion del inventario. En Playa el 41%
+  de los anuncios corresponde a los segmentos popular y medio, mientras
+  que en La Habana ese mismo peso lo tiene el segmento popular. La
+  mediana de Playa esta mas cerca del borde superior del estrato popular
+  porque Playa concentra menos anuncios de vivienda pequena y mas de
+  vivienda media en Miramar, Buenavista y Siboney.
+
+  Conviene recordar que las medianas no son comparables de forma directa entre
+  los dos conjuntos por el uso de umbrales de segmentacion distintos
+  (Playa: popular hasta 70k; La Habana: hasta 50k). La comparacion
+  valida es la de las medianas globales y las de apartamento.
+
+SOBRE LA CONCENTRACIÓN GEOGRÁFICA
+----------------------------------------------------------------------------------------
+  Los anuncios de lujo alto (lujo_top, n=11) se concentran en Siboney,
+  Miramar y Kohly: los tres barrios costeros del oeste de Playa, con la
+  mayor densidad de suelo de lujo de la ciudad. No es coincidencia: son
+  las zonas donde se concentran las villas coloniales de los años 50.
+
+  El 19% de los anuncios de La Habana aparece bajo el municipio 'otro',
+  porque el sitio no publica el municipio para esa proporcion de anuncios.
+  En Playa el 23% no declara barrio. Esa limitacion de la fuente impide
+  afinar el analisis geografico por debajo del nivel municipal en el
+  conjunto de la ciudad.
+
+========================================================================================
+8. NOTA METODOLÓGICA Y LIMITACIONES
+========================================================================================
+
+  El 19% de los anuncios de Revolico no tienen municipio asignado
+  (categoría 'otro'). El segmento de lujo presenta un tamaño de muestra
+  reducido (n=20 y n=9), lo que impide inferencia estadística, por lo que
+  se presentan solo estadísticas descriptivas. Estas limitaciones son
+  inherentes a la fuente de datos y al comportamiento natural del mercado.
+
+  Aclaraciones sobre los conteos reportados:
+    - El dataset de La Habana tiene n=18 en 'lujo' y n=11 en 'lujo_top'
+      tras excluir los anuncios sin precio utilizable, el precio minimo
+      de 1.000 USD y los anuncios en moneda distinta al USD. La nota
+      anterior usa n=20 y n=9 como cifras redondeadas del analisis previo.
+    - Playa usa umbrales de segmentacion distintos, por lo que sus
+      segmentos no son homologables con los de La Habana.
+    - La muestra de Playa es un subconjunto de La Habana, no un conjunto
+      independiente: las comparaciones no son estadisticamente
+      independientes.
+    - La datacion de los anuncios es de ACTUALIZACION, no de
+      publicacion original (data-cy='adUpdatedOn'). El sesgo de
+      seleccion favorece propiedades que llevan tiempo sin venderse.
+========================================================================================

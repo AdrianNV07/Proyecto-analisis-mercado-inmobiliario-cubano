@@ -1,0 +1,46 @@
+========================================================================================
+COMPARACIÓN DE PRECIOS: PARTICULARES vs INTERMEDIARIOS
+========================================================================================
+Dataset: data/processed/dataset_unificado.jsonl  (135 anuncios de Playa)
+
+Definición de es_intermediario = True si título o descripción contienen:
+  'inmobiliaria', 'agencia', 'gestor' o 'realtor'
+
+FUENTE              n   partic.   interm.   % int.
+----------------------------------------------------------------------------------------
+Revolico          105        75        30    28.6%
+----------------------------------------------------------------------------------------
+Revolico
+----------------------------------------------------------------------------------------
+grupo                      n  con precio     mediana    promedio        min         max
+Particulares              75          75      37,000      99,764      1,100   1,000,000
+Intermediarios            30          30      97,500     194,300      5,000     650,000
+
+  Mediana de intermediarios vs particulares: +163.5%
+  Ratio: 2.64x
+
+Redes              30        25         5    16.7%
+----------------------------------------------------------------------------------------
+Redes
+----------------------------------------------------------------------------------------
+grupo                      n  con precio     mediana    promedio        min         max
+Particulares              25          25      22,000      48,520      5,000     180,000
+Intermediarios             5           5      40,000      68,400     22,000     170,000
+
+  Mediana de intermediarios vs particulares: +81.8%
+  Ratio: 1.82x
+
+========================================================================================
+¿LOS INTERMEDIARIOS COBRAN MÁS?
+========================================================================================
+
+PRECIO POR m² (solo con superficie observada)
+----------------------------------------------------------------------------------------
+
+NOTA SOBRE LA SUPERFICIE
+----------------------------------------------------------------------------------------
+  Solo 45/135 anuncios (33.3%) tienen m² observado.
+  El resto tiene la superficie imputada por mediana, por lo que el precio
+  por m² de esos grupos NO es interpretable. Por eso los n son tan bajos
+  en la tabla anterior.
+========================================================================================

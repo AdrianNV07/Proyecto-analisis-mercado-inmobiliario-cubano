@@ -1,0 +1,157 @@
+==============================================================================
+CLUSTERING DE TEXTO DE PLAYA (TF-IDF + K-Means)
+==============================================================================
+Origen: data\processed\playa_limpio_v2.csv  (105 anuncios)
+
+1) LIMPIEZA DE TEXTO
+------------------------------------------------------------------------------
+  longitud media : 76 palabras por anuncio
+  longitud mín/ máx: 5 / 155
+  documentos vacíos tras limpiar: 0
+  ejemplo:
+    parte de abajo de un biplanta independiente en todos sus laterales con patio independiente la casa esta equipada para llegar y vivir consta de cuartos...
+
+2) VECTORIZACIÓN TF-IDF
+------------------------------------------------------------------------------
+  documentos: 105
+  términos  : 100  (max_features=100, min_df=2)
+  bigramas incluidos: ngram_range=(1, 2)
+  densidad de la matriz: 0.1710
+
+  10 términos más frecuentes (mayor peso medio en el corpus):
+    cocina                       0.1241
+    playa                        0.1080
+    casa                         0.1025
+    apartamento                  0.0756
+    independiente                0.0750
+    capitalista                  0.0663
+    edificio                     0.0657
+    fijo                         0.0638
+    propiedad                    0.0616
+    mil                          0.0597
+
+3) K-MEANS — selección por Silhouette Score
+------------------------------------------------------------------------------
+  K=3: silhouette=0.1172  inercia=72.19  tamaños={0: np.int64(18), 1: np.int64(71), 2: np.int64(16)}
+  K=4: silhouette=0.1313  inercia=68.52  tamaños={0: np.int64(52), 1: np.int64(16), 2: np.int64(17), 3: np.int64(20)}
+
+  K óptimo por silhouette: K = 4  (score=0.1313)
+  AVISO: la diferencia entre K=3 y K=4 es pequeña (<0.05);
+          la elección de K es poco robusta.
+
+4) TOP 10 PALABRAS POR CLÚSTER (peso en el centroide)
+==============================================================================
+
+  CLUSTER 0  (n=52, 49.5% del total)
+  término                            peso
+  ----------------------------------------
+  casa                             0.1746
+  playa                            0.1292
+  cocina                           0.1199
+  independiente                    0.1086
+  grande                           0.0874
+  pasillo                          0.0739
+  propiedad                        0.0729
+  consta                           0.0690
+  lavado                           0.0688
+  tanques                          0.0675
+
+    tipo más común  : casa
+    precio mediana  : 70,000 USD
+    palabras prom.  : 87
+    con urgencia    : 1.9%
+    con problemas   : 3.8%
+
+  CLUSTER 1  (n=16, 15.2% del total)
+  término                            peso
+  ----------------------------------------
+  inmobiliaria                     0.1449
+  cuba                             0.1368
+  tanque motor                     0.1348
+  tipo construccion                0.1348
+  electricidad fria                0.1348
+  cisterna tanque                  0.1321
+  tipo                             0.1321
+  viawn propiedad                  0.1231
+  qr                               0.1231
+  ref                              0.1231
+
+    tipo más común  : habitacion
+    precio mediana  : 150,000 USD
+    palabras prom.  : 127
+    con urgencia    : 0.0%
+    con problemas   : 0.0%
+
+  CLUSTER 2  (n=17, 16.2% del total)
+  término                            peso
+  ----------------------------------------
+  apartamento                      0.3174
+  papeles                          0.1872
+  libre                            0.1790
+  fijo                             0.1384
+  cocina                           0.1358
+  miramar                          0.1296
+  nauta                            0.1183
+  hogar                            0.1123
+  playa                            0.1090
+  cuenta                           0.0969
+
+    tipo más común  : apartamento
+    precio mediana  : 25,000 USD
+    palabras prom.  : 79
+    con urgencia    : 5.9%
+    con problemas   : 0.0%
+
+  CLUSTER 3  (n=20, 19.0% del total)
+  término                            peso
+  ----------------------------------------
+  edificio                         0.3093
+  capitalista                      0.2753
+  edificio capitalista             0.2700
+  estado                           0.1857
+  cocina                           0.1791
+  buena                            0.1222
+  apto                             0.1141
+  amplio                           0.0970
+  playa                            0.0951
+  baja                             0.0860
+
+    tipo más común  : apartamento
+    precio mediana  : 20,000 USD
+    palabras prom.  : 51
+    con urgencia    : 0.0%
+    con problemas   : 0.0%
+
+5) PCA 2D
+------------------------------------------------------------------------------
+  PC1: 12.3%   PC2: 7.5%   total: 19.8%
+  Gráfico guardado: graficos\clusters_texto.png
+
+6) INTERPRETACIÓN
+==============================================================================
+
+  Cluster 0: n=52
+    Vocabulario dominante : casa, playa, cocina, independiente
+    Tipo de inmueble      : casa
+    Precio mediana        : 70,000 USD
+    Segmentos de mercado  : {'popular': np.int64(24), 'medio': np.int64(16), 'lujo': np.int64(12)}
+
+  Cluster 1: n=16
+    Vocabulario dominante : inmobiliaria, cuba, tanque motor, tipo construccion
+    Tipo de inmueble      : habitacion
+    Precio mediana        : 150,000 USD
+    Segmentos de mercado  : {'medio': np.int64(9), 'lujo': np.int64(6), 'popular': np.int64(1)}
+
+  Cluster 2: n=17
+    Vocabulario dominante : apartamento, papeles, libre, fijo
+    Tipo de inmueble      : apartamento
+    Precio mediana        : 25,000 USD
+    Segmentos de mercado  : {'popular': np.int64(15), 'lujo': np.int64(1), 'medio': np.int64(1)}
+
+  Cluster 3: n=20
+    Vocabulario dominante : edificio, capitalista, edificio capitalista, estado
+    Tipo de inmueble      : apartamento
+    Precio mediana        : 20,000 USD
+    Segmentos de mercado  : {'popular': np.int64(19), 'medio': np.int64(1)}
+
+==============================================================================

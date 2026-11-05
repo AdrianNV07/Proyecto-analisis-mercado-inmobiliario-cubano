@@ -1,0 +1,160 @@
+================================================================================
+ANÁLISIS DEL PILAR 1 — ANUNCIOS DE VENTA EN LA HABANA
+================================================================================
+Fecha      : 6 de octubre de 2026
+Dataset    : data/processed/habana_limpio.jsonl (515 anuncios)
+GeoJSON    : geojson la habana.json (15 municipios de La Habana)
+Script     : scripts/limpiar_habana.py (limpieza) + scripts/mapa_municipios.py (mapa)
+
+Alcance    : Pilar 1 cubre toda La Habana. El caso de estudio (Playa) es un
+             subconjunto de este conjunto, no un dataset independiente.
+
+================================================================================
+1. HALLAZGO PRINCIPAL: NORMALIZACIÓN GEOGRÁFICA JERÁRQUICA
+================================================================================
+
+Se detectó que los usuarios de Revolico utilizan nombres de barrios
+coloquiales (Vedado, Miramar) en lugar de los municipios oficiales
+(Plaza de la Revolución, Playa). Se implementó una normalización jerárquica
+para mapear barrios a municipios, corrigiendo el conteo geográfico.
+
+PROBLEMA DETECTADO
+--------------------------------------------------------------------------------
+El campo `municipio` de 97 anuncios (18.8% del total) quedó sin asignar
+porque el portal publica el nombre coloquial "Plaza", que no coincide con
+ninguno de los 15 municipios oficiales del GeoJSON. La normalización los
+descartó a la categoría "otro". El resultado era un municipio invisible:
+
+    Plaza de la Revolución .......  0 anuncios  (gris en el mapa)
+
+SOLUCIÓN APLICADA
+--------------------------------------------------------------------------------
+Diccionario jerárquico barrio → municipio, aplicado sobre `municipio_bruto`:
+
+    Vedado, Nuevo Vedado, Rampa, Plaza ......... Plaza de la Revolución
+    Miramar, Siboney, Kohly, La Ceiba,
+    Buenavista, Náutico, Fontanar,
+    Santa Fe, Querejeta, Jaimanitas,
+    Flores, Almendares ....................... Playa
+    Alamar, Guanabo, Santa María del Mar,
+    Bacuranao ............................. Habana del Este
+    Centro Habana ......................... Centro Habana
+    Habana Vieja .......................... Habana Vieja
+    Cerro, Marianao, La Lisa, Boyeros,
+    Diez de Octubre, Arroyo Naranjo,
+    San Miguel del Padrón, Guanabacoa,
+    Regla, Cotorro ......................... se mantienen
+
+EFECTO
+--------------------------------------------------------------------------------
+    Plaza de la Revolución .......  0  →  94 anuncios
+    Anuncios no identificados ..... 97  →   3
+
+================================================================================
+2. CONTRADICCIONES EXCLUIDAS
+================================================================================
+
+Se detectaron 3 anuncios con contradicción entre el municipio reportado por
+la API ("Plaza") y el barrio mencionado en el texto (Miramar, Habana del
+Este). Para evitar sesgos, estos casos fueron excluidos de la clasificación
+municipal y marcados como No identificado.
+
+Detalle de los 3 casos:
+
+  barrio en el texto   título del anuncio                                ubicación real   n
+  ------------------   ----------------------------------------------   --------------  ---
+  Miramar              "Venta de casa en miramar"                       Playa            1
+  Habana del Este     "SE VENDE APARTAMENTO EN COJIMAR, HABANA DEL ESTE" Habana del Este 1
+  Habana del Este     "VENDO CASA EN EL BAHIA HABANA DEL ESTE"          Habana del Este 1
+
+Justificación metodológica: incluir estos 3 en Plaza de la Revolución
+inflaría artificialmente el conteo de ese municipio con anuncios que
+pertenecen a Playa y a Habana del Este. Excluirlos mantiene la integridad
+del conteo geográfico, aunque reduce el total de Plaza de la Revolución de
+96 a 94.
+
+Nota sobre la cobertura del diccionario: la jerarquía aplicada detecta
+Miramar, pero no detectaba "Habana del Este" porque ese término no figuraba
+en ella (solo Alamar, Guanabo, Santa María del Mar y Bacuranao). Se amplió
+el chequeo para cubrir también el propio nombre del municipio, lo que
+permitió capturar los 2 casos adicionales.
+
+Advertencia sobre el alcance de la jerarquía: "Habana del Este" aparece en
+la columna `barrio` de esos 2 anuncios porque el extractor de barrio reconoce
+el nombre del municipio, no porque haya detectado un barrio concreto. La
+contradicción se confirma leyendo el texto, donde los anuncios dicen
+explícitamente "Cojímar" y "El Bahía", ambos en Habana del Este. Un dato
+del tipo `barrio = "Habana del Este"` no debe interpretarse como barrio
+reconocido, sino como conflicto pendiente de resolución por lectura.
+
+================================================================================
+3. CONTEO FINAL POR MUNICIPIO
+================================================================================
+
+    municipio                  n    %      color en el mapa
+    ------------------------  ---  -----  --------------------
+    Playa                     106   20.6%  ROJO (máximo)
+    Plaza de la Revolución     94   18.3%  escala
+    Centro Habana              76   14.8%  escala
+    Diez de Octubre            55   10.7%  escala
+    Cerro                      37    7.2%  escala
+    Habana del Este           34    6.6%  escala
+    Arroyo Naranjo             32    6.2%  escala
+    La Habana Vieja           25    4.9%  escala
+    Boyeros                    20    3.9%  escala
+    Marianao                  10    1.9%  escala
+    La Lisa                     9    1.7%  escala
+    Guanabacoa                  7    1.4%  escala
+    Cotorro                     3    0.6%  escala
+    San Miguel del Padrón       3    0.6%  escala
+    Regla                       1    0.2%  AZUL (mínimo)
+    No identificado             3    0.6%  fuera del mapa
+    ------------------------  ---
+    TOTAL                     515  100.0%
+
+    Comprobación: 512 identificados + 3 no identificados = 515
+
+================================================================================
+4. SEGMENTOS DE MERCADO
+================================================================================
+
+    segmento            n    mediana      promedio     min         max
+    ------------------  ---  -----------  -----------  -----------  -----------
+    popular  (<50k)    370        17,000       19,274       1,000       48,000
+    medio    (50-200k) 116        80,000       89,198      50,000      180,000
+    lujo     (200-500k)18       265,000      305,000     200,000      490,000
+    lujo_top (>500k)   11       600,000      798,182     500,000    2,200,000
+
+Nota: los segmentos `lujo` (n=18) y `lujo_top` (n=11) tienen muestras
+pequeñas. Solo se reportan estadísticas descriptivas; no se aplican pruebas
+de significancia ni clustering sobre ellos.
+
+================================================================================
+5. LIMITACIONES
+================================================================================
+
+  - La distribución por municipio refleja la oferta publicada en Revolico, no
+    el mercado total de venta de vivienda de La Habana. Quedan fuera otros
+    portales, redes sociales y el mercado informal.
+
+  - El sesgo de antigüedad favorece propiedades que llevan tiempo sin
+    venderse: un anuncio que se vendiera en semanas se retiraría del listado.
+    La fecha disponible es de ACTUALIZACIÓN (data-cy="adUpdatedOn"), no de
+    publicación original.
+
+  - La muestra se extrajo de las subcategorías `inmobiliaria-casas` y
+    `inmobiliaria-otros-inmobiliaria`, las únicas de venta que existen en
+    Revolico. No hay subcategoría de apartamentos, por lo que los
+    apartamentos de la capital aparecen dentro de esas dos.
+
+  - El dataset no distingue entre venta por el dueño y venta por
+    intermediario en el momento de la captura original; la variable
+    `es_intermediario` se derivó después del texto.
+
+================================================================================
+Archivos relacionados:
+  data/processed/habana_limpio.jsonl
+  graficos/mapa_municipios_habana.png
+  scripts/limpiar_habana.py
+  scripts/mapa_municipios.py
+================================================================================

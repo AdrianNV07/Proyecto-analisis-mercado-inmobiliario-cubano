@@ -1,0 +1,164 @@
+==============================================================================
+CLUSTERING EXPLORATORIO DE PLAYA (sin usar el precio)
+==============================================================================
+Origen: data\processed\playa_limpio_v2.csv  (105 filas)
+
+1) IMPUTACIÓN DE NULOS
+------------------------------------------------------------------------------
+columna                            nulos   mediana global  método
+habitaciones                          26              3.0  mediana por tipo_inmueble
+banos                                 14              1.0  mediana por tipo_inmueble
+metros_cuadrados                      69            273.5  mediana por tipo_inmueble
+barrio                                80                -  rellenado con "Desconocido"
+
+2) CODIFICACIÓN
+------------------------------------------------------------------------------
+tipo_inmueble -> 13 dummies (6 categorías)
+barrio         -> 7 dummies (7 categorías)
+problemas_estructurales: {0: 103, 1: 2}
+
+Variables totales para el clustering: 18
+  continuas : ['habitaciones', 'banos', 'metros_cuadrados', 'menciona_problemas_estructurales', 'cantidad_palabras']
+  dummies    : ['tipo_inmueble_apartamento', 'tipo_inmueble_casa', 'tipo_inmueble_habitacion', 'tipo_inmueble_local', 'tipo_inmueble_otro', 'tipo_inmueble_solar', 'barrio_Atabey', 'barrio_Desconocido', 'barrio_Kohly', 'barrio_Miramar', 'barrio_Reparto Náutico', 'barrio_Santa Fe', 'barrio_Siboney']
+
+3) ESTANDARIZACIÓN (StandardScaler, media 0 y varianza 1)
+------------------------------------------------------------------------------
+  Medias post-escalado (deben ser ~0):
+    habitaciones                         0.000000
+    banos                               -0.000000
+    metros_cuadrados                     0.000000
+    menciona_problemas_estructurales    -0.000000
+    cantidad_palabras                    0.000000
+    tipo_inmueble_apartamento           -0.000000
+    tipo_inmueble_casa                  -0.000000
+    tipo_inmueble_habitacion            -0.000000
+    tipo_inmueble_local                  0.000000
+    tipo_inmueble_otro                   0.000000
+    tipo_inmueble_solar                  0.000000
+    barrio_Atabey                        0.000000
+    barrio_Desconocido                   0.000000
+    barrio_Kohly                         0.000000
+    barrio_Miramar                      -0.000000
+    barrio_Reparto Náutico               0.000000
+    barrio_Santa Fe                     -0.000000
+    barrio_Siboney                      -0.000000
+
+4) MÉTODO DEL CODO
+------------------------------------------------------------------------------
+  K        inercia          caida   % varianza
+  2          1,646              0         0.0%
+  3          1,491            155         9.4%
+  4          1,359            132         8.8%
+  5          1,233            126         9.3%
+  6          1,118            115         9.3%
+
+  K óptimo (mayor caída de inercia): K = 5
+
+  Gráfico guardado: graficos\codo_caracteristicas.png
+
+5) K-MEANS
+------------------------------------------------------------------------------
+  Modelo entrenado con K = 5, n_init=20, seed=42
+  Inercia final: 1,233
+  Distribución de clústeres: {0: 23, 1: 45, 2: 29, 3: 4, 4: 4}
+
+6) VISUALIZACIÓN PCA
+------------------------------------------------------------------------------
+  PC1 explica 17.8% de la varianza
+  PC2 explica 10.6% de la varianza
+  Total explicado: 28.3%
+
+  Cargas principales (contribución a cada componente):
+    metros_cuadrados                   PC1=  0.456  PC2=  0.048
+    habitaciones                       PC1=  0.415  PC2=  0.086
+    tipo_inmueble_apartamento          PC1= -0.378  PC2= -0.390
+    banos                              PC1=  0.345  PC2=  0.149
+    barrio_Desconocido                 PC1= -0.327  PC2=  0.478
+    tipo_inmueble_habitacion           PC1=  0.271  PC2= -0.135
+    barrio_Siboney                     PC1=  0.255  PC2= -0.075
+    cantidad_palabras                  PC1=  0.175  PC2= -0.233
+
+  Gráfico guardado: graficos\clusters_caracteristicas.png
+
+7) INTERPRETACIÓN POR CLÚSTER
+==============================================================================
+
+  +-- CLUSTER 0  (n = 23, 21.9% del total)
+  |
+  |  Tipo mas comun     : habitacion (22/23)
+  |  Barrio mas comun   : Desconocido (14/23)
+  |  Habitaciones prom.  : 3.3
+  |  Banos prom.        : 2.0
+  |  m2 promedio        : 496
+  |  Con problemas      : 4.3%
+  |  Palabras prom.     : 113
+  |  Precio mediana     : 100,000 USD  (solo referencia)
+  +
+
+  +-- CLUSTER 1  (n = 45, 42.9% del total)
+  |
+  |  Tipo mas comun     : apartamento (43/45)
+  |  Barrio mas comun   : Desconocido (36/45)
+  |  Habitaciones prom.  : 2.3
+  |  Banos prom.        : 1.3
+  |  m2 promedio        : 102
+  |  Con problemas      : 0.0%
+  |  Palabras prom.     : 75
+  |  Precio mediana     : 25,000 USD  (solo referencia)
+  +
+
+  +-- CLUSTER 2  (n = 29, 27.6% del total)
+  |
+  |  Tipo mas comun     : casa (29/29)
+  |  Barrio mas comun   : Desconocido (23/29)
+  |  Habitaciones prom.  : 3.4
+  |  Banos prom.        : 2.0
+  |  m2 promedio        : 376
+  |  Con problemas      : 0.0%
+  |  Palabras prom.     : 73
+  |  Precio mediana     : 70,000 USD  (solo referencia)
+  +
+
+  +-- CLUSTER 3  (n = 4, 3.8% del total)
+  |
+  |  Tipo mas comun     : local (4/4)
+  |  Barrio mas comun   : Desconocido (4/4)
+  |  Habitaciones prom.  : 4.0
+  |  Banos prom.        : 2.0
+  |  m2 promedio        : 172
+  |  Con problemas      : 25.0%
+  |  Palabras prom.     : 100
+  |  Precio mediana     : 58,500 USD  (solo referencia)
+  +
+
+  +-- CLUSTER 4  (n = 4, 3.8% del total)
+  |
+  |  Tipo mas comun     : solar (4/4)
+  |  Barrio mas comun   : Desconocido (3/4)
+  |  Habitaciones prom.  : 3.0
+  |  Banos prom.        : 2.8
+  |  m2 promedio        : 160
+  |  Con problemas      : 0.0%
+  |  Palabras prom.     : 110
+  |  Precio mediana     : 115,000 USD  (solo referencia)
+  +
+
+TABLA COMPARATIVA
+------------------------------------------------------------------------------
+                          n    tipo_modo  barrio_modo  hab_prom  banos_prom  m2_prom  pct_problemas  palabras_prom  precio_mediana
+cluster_caracteristicas                                                                                                           
+0                        23   habitacion  Desconocido       3.3         2.0    496.1            4.3          112.7        100000.0
+1                        45  apartamento  Desconocido       2.3         1.3    102.2            0.0           74.9         25000.0
+2                        29         casa  Desconocido       3.4         2.0    376.3            0.0           72.7         70000.0
+3                         4        local  Desconocido       4.0         2.0    171.5           25.0          100.5         58500.0
+4                         4        solar  Desconocido       3.0         2.8    160.0            0.0          110.2        115000.0
+
+NOTA SOBRE CALIDAD DE DATOS
+------------------------------------------------------------------------------
+  m² era nulo y se imputó: 69/105 (65.7%)
+  m² real observado      : 36/105 (34.3%)
+  barrio 'Desconocido'   : 80/105 (76.2%)
+
+  ADVERTENCIA: el dummy de barrio 'Desconocido' domina el conjunto,
+  por lo que esa variable aporta poca información al clustering.
+==============================================================================

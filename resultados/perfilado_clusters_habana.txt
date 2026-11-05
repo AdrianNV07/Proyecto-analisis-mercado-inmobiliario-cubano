@@ -1,0 +1,170 @@
+==============================================================================
+PERFILADO DE CLÚSTERES — LA HABANA
+==============================================================================
+Dataset: data\processed\habana_clusterizado_texto.jsonl
+Total: 515 anuncios
+Clústeres de texto: [np.int64(0), np.int64(1), np.int64(2), np.int64(3), np.int64(4)]
+
+==============================================================================
+NOMBRES ASIGNADOS — CLUSTERING DE TEXTO
+==============================================================================
+
+  CLÚSTER 0 → "Venta con Trámites Pendientes"
+    n=57 (11.1%)
+    Palabras clave: regla, papeles, papeles regla, apartamento, casa
+    Tipo dominante: apartamento
+    Precio mediana: 17,000 USD
+    % intermediario: 10.5%
+    Razón: El Clúster 0 se nombró "Venta con Trámites Pendientes" porque el texto enfatiza trámites y documentación (regla, papeles, negocio); el lenguaje sugiere entrega inmediata (fijo); el tipo dominante es apartamento; el precio mediano es bajo (17,000 USD).
+
+  CLÚSTER 1 → "Anuncios de Agencias"
+    n=35 (6.8%)
+    Palabras clave: inmobiliaria, cuba, tanque motor, tipo, cisterna tanque
+    Tipo dominante: apartamento
+    Precio mediana: 110,000 USD
+    % intermediario: 97.1%
+    Razón: El Clúster 1 se nombró "Anuncios de Agencias" porque el vocabulario dominante incluye términos de agencia (inmobiliaria, agencia, ref); el tipo dominante es apartamento; el precio mediano es alto (110,000 USD); el 97% son anuncios de intermediarios.
+
+  CLÚSTER 2 → "Apartamentos en Edificio"
+    n=51 (9.9%)
+    Palabras clave: edificio capitalista, edificio, listo, capitalista, cocina
+    Tipo dominante: apartamento
+    Precio mediana: 25,000 USD
+    % intermediario: 2.0%
+    Razón: El Clúster 2 se nombró "Apartamentos en Edificio" porque las palabras clave mencionan características de edificio (edificio, listo, capitalista); el tipo dominante es apartamento; el precio mediano es bajo (25,000 USD).
+
+  CLÚSTER 3 → "Casas Económicas"
+    n=225 (43.7%)
+    Palabras clave: casa, independiente, cocina, libre, cisterna
+    Tipo dominante: casa
+    Precio mediana: 30,000 USD
+    % intermediario: 10.2%
+    Razón: El Clúster 3 se nombró "Casas Económicas" porque el tipo dominante es casa.
+
+  CLÚSTER 4 → "Entrega Inmediata"
+    n=147 (28.5%)
+    Palabras clave: apartamento, cocina, deja, fijo, cosas
+    Tipo dominante: apartamento
+    Precio mediana: 16,000 USD
+    % intermediario: 13.6%
+    Razón: El Clúster 4 se nombró "Entrega Inmediata" porque las palabras clave mencionan características de edificio (edificio); el lenguaje sugiere entrega inmediata (deja, fijo, cosas); el tipo dominante es apartamento; el precio mediano es bajo (16,000 USD).
+
+  Mapa final: {np.int64(0): 'Venta con Trámites Pendientes', np.int64(1): 'Anuncios de Agencias', np.int64(2): 'Apartamentos en Edificio', np.int64(3): 'Casas Económicas', np.int64(4): 'Entrega Inmediata'}
+
+==============================================================================
+CLUSTERING NUMÉRICO (K=5)
+==============================================================================
+  K=3: silhouette=0.5199  inercia=1,502.07  tamaños={0: np.int64(420), 1: np.int64(94), 2: np.int64(1)}
+  K=4: silhouette=0.4975  inercia=1,157.69  tamaños={0: np.int64(73), 1: np.int64(24), 2: np.int64(417), 3: np.int64(1)}
+  K=5: silhouette=0.4414  inercia=840.40  tamaños={0: np.int64(245), 1: np.int64(173), 2: np.int64(1), 3: np.int64(73), 4: np.int64(23)}
+
+  K óptimo: K=3 (silhouette=0.5199)
+
+==============================================================================
+NOMBRES ASIGNADOS — CLUSTERING NUMÉRICO
+==============================================================================
+
+  CLÚSTER NUM 0 → "Viviendas Pequeñas Económicas"
+    n=420 (81.6%)
+    Precio mediana: 23,000 USD
+    Habitaciones mediana: 2.0
+    Baños mediana: 1.0
+    Palabras promedio: 87
+    % intermediario: 0.0%
+    Razón: El Clúster numérico 0 se nombró "Viviendas Pequeñas Económicas" porque la mediana de precio es 23,000 USD, con 2.0 habitaciones y 1.0 baños en promedio.
+
+  CLÚSTER NUM 1 → "Viviendas Medias (Intermediarios)"
+    n=94 (18.3%)
+    Precio mediana: 62,500 USD
+    Habitaciones mediana: 3.0
+    Baños mediana: 2.0
+    Palabras promedio: 118
+    % intermediario: 89.4%
+    Razón: El Clúster numérico 1 se nombró "Viviendas Medias (Intermediarios)" porque la mediana de precio es 62,500 USD, con 3.0 habitaciones y 2.0 baños en promedio.
+
+  CLÚSTER NUM 2 → "Viviendas Económicas"
+    n=1 (0.2%)
+    Precio mediana: 6,300 USD
+    Habitaciones mediana: nan
+    Baños mediana: 70.0
+    Palabras promedio: 60
+    % intermediario: 0.0%
+    Razón: El Clúster numérico 2 se nombró "Viviendas Económicas" porque la mediana de precio es 6,300 USD, con nan habitaciones y 70.0 baños en promedio.
+
+==============================================================================
+GRÁFICOS ACTUALIZADOS
+==============================================================================
+  PCA texto: graficos\clusters_texto_habana.png
+  PCA numérico: graficos\clusters_numerico_habana.png
+
+==============================================================================
+TABLA RESUMEN
+==============================================================================
+
+  CLÚSTERES DE TEXTO:
+  Nombre                             n      % Tipo             Precio med  % int
+  ------------------------------ ----- ------ -------------- ------------ ------
+  Venta con Trámites Pendientes     57  11.1% apartamento        17,000 USD  10.5%
+  Anuncios de Agencias              35   6.8% apartamento       110,000 USD  97.1%
+  Apartamentos en Edificio          51   9.9% apartamento        25,000 USD   2.0%
+  Casas Económicas                 225  43.7% casa               30,000 USD  10.2%
+  Entrega Inmediata                147  28.5% apartamento        16,000 USD  13.6%
+
+  CLÚSTERES NUMÉRICOS:
+  Nombre                                  n      %   Hab  Baños   Precio med
+  ----------------------------------- ----- ------ ----- ------ ------------
+  Viviendas Pequeñas Económicas         420  81.6%   2.0    1.0     23,000 USD
+  Viviendas Medias (Intermediarios)      94  18.3%   3.0    2.0     62,500 USD
+  Viviendas Económicas                    1   0.2%   nan   70.0      6,300 USD
+
+==============================================================================
+COMPARACIÓN CON PLAYA
+==============================================================================
+
+  Clústeres de Playa (K=4):
+    - Cluster 0: Casas de lujo (n=32, precio mediano 265,000 USD)
+    - Cluster 1: Apartamentos estándar (n=43, precio mediano 75,000 USD)
+    - Cluster 2: Anuncios de agencias (n=20, precio mediano 52,500 USD)
+    - Cluster 3: Casas económicas (n=10, precio mediano 24,000 USD)
+
+  Clústeres de La Habana (K=5):
+    - Venta con Trámites Pendientes: n=57, precio mediano 17,000 USD
+    - Anuncios de Agencias: n=35, precio mediano 110,000 USD
+    - Apartamentos en Edificio: n=51, precio mediano 25,000 USD
+    - Casas Económicas: n=225, precio mediano 30,000 USD
+    - Entrega Inmediata: n=147, precio mediano 16,000 USD
+
+  Diferencias clave:
+    1. En La Hay 5 perfiles de texto vs 4 en Playa (la muestra más grande
+       permite más granularidad discursiva).
+    2. Aparece un perfil 'Venta con Trámites Pendientes' (regla/papeles)
+       que no existía en Playa — refleja la complejidad legal en La Habana.
+    3. El perfil de agencias (inmobiliaria/wa/https) también aparece en
+       La Habana pero con mayor concentración en Playa y Plaza de la Revolución.
+    4. Los precios medianos son significativamente menores en La Habana
+       (17k-110k USD) frente a Playa (24k-265k USD).
+
+==============================================================================
+GUARDANDO DATASETS
+==============================================================================
+  data\processed\habana_clusterizado_texto.jsonl (515 registros, con nombre_cluster_texto)
+  data\processed\habana_clusterizado_completo.jsonl (515 registros, con ambos clusterings + nombres)
+  Documentación añadida a: resultados\analisis_playa.txt
+
+==============================================================================
+RESUMEN FINAL
+==============================================================================
+
+  Clústeres de texto (K=5):
+    0: "Venta con Trámites Pendientes" (n=57)
+    1: "Anuncios de Agencias" (n=35)
+    2: "Apartamentos en Edificio" (n=51)
+    3: "Casas Económicas" (n=225)
+    4: "Entrega Inmediata" (n=147)
+
+  Clústeres numéricos:
+    0: "Viviendas Pequeñas Económicas" (n=420)
+    1: "Viviendas Medias (Intermediarios)" (n=94)
+    2: "Viviendas Económicas" (n=1)
+
+==============================================================================
