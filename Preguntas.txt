@@ -1,0 +1,44 @@
+Preguntas
+Bloque 1: Datos del Inmueble
+
+1. ¿En qué barrio de Playa está la propiedad?
+2. ¿Qué tipo de inmueble vende?
+3. ¿Cuántos metros cuadrados tiene la propiedad?
+4. ¿Cuántas habitaciones tiene?
+5. ¿Cuántos baños tiene?
+6. ¿En qué estado se encuentra?
+7. ¿Cuenta con espacios exteriores?
+8. ¿La propiedad tiene los papeles en regla (placa libre) o tiene algún trámite legal pendiente?
+
+Bloque 2: Precios
+
+9. ¿Cuál es el precio que pide por la propiedad?
+10. ¿En qué moneda prefiere que le paguen?
+11. ¿La venta incluye muebles o electrodomésticos, o usted se los lleva?
+
+Bloque 3: Motivo de Venta y Migración (El núcleo)
+
+12. ¿Cuál es el motivo principal por el que vende? (Migración, Económico, etc.)
+13. ¿Puso en el anuncio que se va del país? ¿Por qué sí o por qué no? (La pregunta estrella)
+
+Bloque 4: Negociación e Intermediarios
+
+14. ¿Cuál sería el precio mínimo que aceptaría si le pagan al contado hoy?
+15. El precio que pide actualmente por la propiedad, es el mismo que el del primer día? 
+16. ¿En su experiencia, las personas que se van del país bajan más el precio?
+17. ¿Está utilizando un intermediario para vender su propiedad?
+
+Bloque 5: Urgencia y Tiempo
+
+18. ¿Cuánto tiempo lleva intentando vender la propiedad?
+19. ¿Tiene una fecha límite para vender?
+
+Bloque 6: Información Oculta
+
+20. ¿Puso los problemas que presenta la casa en el anuncio?
+21. Si un comprador le pregunta directamente por los problemas, ¿usted se los dice?
+
+Bloque 7: Percepción y Cierre
+
+22. ¿Por qué cree que la gente prefiere comprar en Playa y no en otros municipios?
+23. ¿Publicó su anuncio en Revolico o redes?
