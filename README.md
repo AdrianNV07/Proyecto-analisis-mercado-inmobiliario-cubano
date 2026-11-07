@@ -6,7 +6,7 @@ Este repositorio contiene el código, los datos procesados y los resultados del 
 El estudio revela una profunda asimetría de información: mientras el 0% de los anuncios online menciona la migración, el 33.3% de los vendedores en la calle confiesa que vende para emigrar. Los vendedores ocultan su urgencia y los problemas de las viviendas (75% de ocultamiento) para no perder poder de negociación. Como resultado, los migrantes aceptan rebajas de precio de casi el doble (7.82%) que los no migrantes (4.96%).
 
 ## 📊 Fuentes de Datos (Los 4 Pilares)
-1. Web Scraping (Revolico): 735 anuncios extraídos de toda La Habana.
+1. Web Scraping (Revolico): 515 anuncios extraídos de toda La Habana.
 2. Agencias Online: 30 anuncios de catálogos formales (Casaoasis).
 3. Redes Sociales: 30 anuncios de grupos de Facebook/WhatsApp.
 4. Entrevistas Callejeras: 30 vendedores reales entrevistados en Playa.
