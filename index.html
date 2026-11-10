@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PlayaTransparente</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col font-sans text-slate-800">
+  <header class="bg-gradient-to-r from-blue-700 via-blue-700 to-blue-900 text-white">
+    <div class="max-w-6xl mx-auto px-4 py-14 text-center">
+      <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">PlayaTransparente</h1>
+      <p class="mt-3 text-lg md:text-xl text-blue-100 font-medium">El fin de la asimetría de información</p>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-6xl w-full mx-auto px-4 py-10 space-y-12">
+    <section id="publicar">
+      <div class="mb-6">
+        <h2 class="text-3xl font-bold text-blue-900">Publica un inmueble</h2>
+        <p class="mt-2 text-slate-600">Completa el formulario para ofrecer transparencia en el mercado.</p>
+      </div>
+      <form id="form-publicacion" class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white rounded-2xl shadow-xl p-6 border border-blue-100">
+        <div class="md:col-span-2">
+          <label for="titulo" class="block text-sm font-semibold text-blue-900 mb-1">Título <span class="text-red-500">*</span></label>
+          <input id="titulo" name="titulo" type="text" required class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+
+        <div>
+          <label for="precio" class="block text-sm font-semibold text-blue-900 mb-1">Precio (USD) <span class="text-red-500">*</span></label>
+          <input id="precio" name="precio" type="number" min="0" step="0.01" required class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+
+        <div>
+          <label for="barrio" class="block text-sm font-semibold text-blue-900 mb-1">Barrio <span class="text-red-500">*</span></label>
+          <input id="barrio" name="barrio" type="text" required class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+
+        <div>
+          <label for="metros_cuadrados" class="block text-sm font-semibold text-blue-900 mb-1">Metros Cuadrados (m²) <span class="text-red-500">*</span></label>
+          <input id="metros_cuadrados" name="metros_cuadrados" type="number" min="0" step="0.01" required class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+
+        <div>
+          <label for="habitaciones" class="block text-sm font-semibold text-blue-900 mb-1">Habitaciones <span class="text-red-500">*</span></label>
+          <input id="habitaciones" name="habitaciones" type="number" min="0" step="1" required class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+
+        <div>
+          <label for="banos" class="block text-sm font-semibold text-blue-900 mb-1">Baños <span class="text-red-500">*</span></label>
+          <input id="banos" name="banos" type="number" min="0" step="1" required class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+
+        <div>
+          <label for="estado" class="block text-sm font-semibold text-blue-900 mb-1">Estado <span class="text-red-500">*</span></label>
+          <select id="estado" name="estado" required class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+            <option value="Excelente">Excelente</option>
+            <option value="Bueno">Bueno</option>
+            <option value="Regular">Regular</option>
+            <option value="Para remodelar">Para remodelar</option>
+          </select>
+        </div>
+
+        <div class="md:col-span-2">
+          <label for="descripcion" class="block text-sm font-semibold text-blue-900 mb-1">Descripción libre <span class="text-red-500">*</span></label>
+          <textarea id="descripcion" name="descripcion" rows="4" required class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+        </div>
+
+        <div class="md:col-span-2">
+          <label for="fotos" class="block text-sm font-semibold text-blue-900 mb-1">Fotos de la casa</label>
+          <input id="fotos" name="fotos" type="file" accept="image/*" multiple class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+
+        <div class="md:col-span-2">
+          <button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 rounded-xl transition">Publicar</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="catalogo">
+      <div class="mb-6">
+        <h2 class="text-3xl font-bold text-blue-900">Catálogo</h2>
+        <p class="mt-2 text-slate-600">Anuncios publicados y su reputación.</p>
+        <div class="flex flex-wrap gap-3 mt-4">
+          <button type="button" id="tab-cat" class="px-4 py-2 rounded-xl bg-blue-700 text-white font-semibold">Catálogo</button>
+          <button type="button" id="tab-mis" class="px-4 py-2 rounded-xl bg-white text-blue-900 border border-blue-200 font-semibold">Mis publicaciones</button>
+        </div>
+      </div>
+      <div id="contenedor-catalogo" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </section>
+  </main>
+
+  <footer class="bg-blue-900 text-white py-6 text-center text-sm">
+    <p>PlayaTransparente — Transparencia en el mercado inmobiliario cubano</p>
+  </footer>
+
+  <div id="modal-detalle" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;"></div>
+
+  <script>
+    const CLAVE_ANUNCIOS = "anuncios";
+    const USUARIO_ACTUAL = "local";
+    let filtroActual = "todos";
+    let anuncioActivoId = null;
+
+    function leerAnuncios() {
+      try {
+        const raw = localStorage.getItem(CLAVE_ANUNCIOS);
+        const data = raw ? JSON.parse(raw) : [];
+        return Array.isArray(data) ? data : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function guardarAnuncios(anuncios) {
+      localStorage.setItem(CLAVE_ANUNCIOS, JSON.stringify(anuncios));
+    }
+
+    function escapeHtml(valor) {
+      return String(valor ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function formatearPrecio(valor) {
+      const n = Number(valor) || 0;
+      return n.toLocaleString("en-US");
+    }
+
+    function crearId() {
+      return "anuncio-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8);
+    }
+
+    function ratingActual(anuncio) {
+      const r = Array.isArray(anuncio.ratings) ? anuncio.ratings : [];
+      return r.length ? Number(r[r.length - 1]) : 0;
+    }
+
+    function promedioEstrellas(anuncio) {
+      const r = Array.isArray(anuncio.ratings) ? anuncio.ratings : [];
+      if (!r.length) { return 0; }
+      const suma = r.reduce(function (acc, v) { return acc + Number(v); }, 0);
+      return suma / r.length;
+    }
+
+    function renderizarCatalogo(filtro) {
+      const contenedor = document.getElementById("contenedor-catalogo");
+      const anuncios = leerAnuncios();
+      let lista = anuncios;
+      if (filtro === "mis") { lista = anuncios.filter(function (a) { return a.owner === USUARIO_ACTUAL; }); }
+      contenedor.innerHTML = "";
+      if (lista.length === 0) {
+        contenedor.innerHTML = '<p class="col-span-full text-center text-slate-500 py-8">Aún no hay anuncios publicados. Sé el primero en generar transparencia.</p>';
+        return;
+      }
+      lista.forEach(function (anuncio) { contenedor.appendChild(crearTarjeta(anuncio)); });
+    }
+
+    function crearTarjeta(anuncio) {
+      const card = document.createElement("div");
+      card.id = "card-" + anuncio.id;
+      card.className = "bg-white rounded-2xl shadow-xl p-6 border border-blue-100 flex flex-col gap-4";
+      card.dataset.id = anuncio.id;
+
+      card.innerHTML = `
+        <div class="flex flex-wrap justify-between items-start gap-2">
+          <h3 class="text-xl font-bold text-blue-900">${escapeHtml(anuncio.titulo)}</h3>
+          <p class="text-2xl font-extrabold text-blue-700">$${escapeHtml(formatearPrecio(anuncio.precio))} USD</p>
+        </div>
+        <div class="grid grid-cols-2 gap-2 text-sm text-slate-700">
+          <p><span class="font-semibold">Barrio:</span> ${escapeHtml(anuncio.barrio)}</p>
+          <p><span class="font-semibold">m²:</span> ${escapeHtml(formatearPrecio(anuncio.metros_cuadrados))} m²</p>
+          <p><span class="font-semibold">Habitaciones:</span> ${escapeHtml(formatearPrecio(anuncio.habitaciones))}</p>
+          <p><span class="font-semibold">Baños:</span> ${escapeHtml(formatearPrecio(anuncio.banos))}</p>
+          <p><span class="font-semibold">Estado:</span> ${escapeHtml(anuncio.estado)}</p>
+        </div>
+        <p class="text-slate-600">${escapeHtml(anuncio.descripcion)}</p>
+        ${Array.isArray(anuncio.fotos) && anuncio.fotos.length > 0 ? '<div class="flex flex-wrap gap-2">' + anuncio.fotos.map(function (f, i) { return '<img src="' + escapeHtml(f) + '" alt="' + escapeHtml(anuncio.titulo) + '" class="w-full h-40 object-cover rounded-xl" />'; }).join("") + '</div>' : ""}
+        <div class="border-t border-blue-100 pt-4">
+          <p class="font-semibold text-blue-900 mb-2">Transparencia del vendedor</p>
+          <div class="flex items-center gap-1">
+            ${[1, 2, 3, 4, 5].map(function (i) {
+              const actual = Number(ratingActual(anuncio)) || 0;
+              const filled = i <= actual ? "★" : "☆";
+              return '<button type="button" class="star-btn text-3xl" data-value="' + i + '" data-id="' + anuncio.id + '">' + filled + '</button>';
+            }).join("")}
+          </div>
+          <p class="mt-2 text-sm text-slate-500">Promedio: ${Number(promedioEstrellas(anuncio)) > 0 ? Number(promedioEstrellas(anuncio)).toFixed(1) + " / 5" : "Sin calificaciones"}</p>
+          <div class="flex items-center gap-3 mt-2">
+            <button type="button" class="like-btn bg-blue-700 hover:bg-blue-800 text-white px-3 py-1.5 rounded-lg text-sm font-semibold" data-id="${anuncio.id}">👍 Me gusta</button>
+            <button type="button" class="dislike-btn bg-blue-700 hover:bg-blue-800 text-white px-3 py-1.5 rounded-lg text-sm font-semibold" data-id="${anuncio.id}">👎 No me gusta</button>
+          </div>
+          <p class="mt-2 text-sm text-slate-500">👍 ${escapeHtml(Number(anuncio.likes) || 0)} · 👎 ${escapeHtml(Number(anuncio.dislikes) || 0)}</p>
+          <button type="button" class="abrir-detalle-btn mt-2 w-full bg-blue-50 text-blue-700 border border-blue-200 px-3 py-2 rounded-lg text-sm font-semibold" data-id="${anuncio.id}">Entrar / Comentar</button>
+          <button type="button" class="delete-anuncio-btn mt-2 w-full bg-red-50 text-red-700 border border-red-200 px-3 py-2 rounded-lg text-sm font-semibold" data-id="${anuncio.id}">🗑️ Eliminar anuncio</button>
+        </div>
+        <div class="border-t border-blue-100 pt-4">
+          <p class="font-semibold text-blue-900 mb-2">Comentarios</p>
+          <form class="comentario-form flex flex-col sm:flex-row gap-2" data-id="${anuncio.id}">
+            <input type="text" class="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm" placeholder="Ej. El vendedor ocultó que la casa tenía humedad" required />
+            <button type="submit" class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-lg text-sm font-semibold">Comentar</button>
+          </form>
+          <div class="comentarios mt-3 flex flex-col gap-2"></div>
+        </div>
+      `;
+
+      const contenedorComentarios = card.querySelector(".comentarios");
+      const lista = Array.isArray(anuncio.comentarios) ? anuncio.comentarios : [];
+      if (lista.length === 0) {
+        contenedorComentarios.innerHTML = '<p class="text-sm text-slate-400">Sin comentarios aún.</p>';
+      } else {
+        contenedorComentarios.innerHTML = lista.map(function (c, i) {
+          return '<div class="bg-blue-50 rounded-lg p-3 text-sm text-slate-700 flex items-start justify-between gap-2">' +
+            '<span>' + escapeHtml(c.texto) + "</span>" +
+            '<button type="button" class="delete-comentario-btn text-red-500 hover:text-red-700 text-sm font-semibold" data-id="' + anuncio.id + '" data-comentario-idx="' + i + '">🗑️ Eliminar</button>' +
+            "</div>";
+        }).join("");
+      }
+
+      return card;
+    }
+
+    function abrirModal(id) {
+      const modal = document.getElementById("modal-detalle");
+      const anuncio = leerAnuncios().find(function (a) { return a.id === id; });
+      if (!anuncio) { return; }
+      anuncioActivoId = id;
+      modal.innerHTML = `
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-6 relative max-h-[90vh] overflow-y-auto">
+          <button type="button" class="cerrar-detalle-btn absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-2xl" aria-label="Cerrar">✕</button>
+          <h3 class="text-2xl font-bold text-blue-900 pr-8">${escapeHtml(anuncio.titulo)}</h3>
+          <p class="text-2xl font-extrabold text-blue-700">$${escapeHtml(formatearPrecio(anuncio.precio))} USD</p>
+          <div class="grid grid-cols-2 gap-2 text-sm text-slate-700 mt-2">
+            <p><span class="font-semibold">Barrio:</span> ${escapeHtml(anuncio.barrio)}</p>
+            <p><span class="font-semibold">m²:</span> ${escapeHtml(formatearPrecio(anuncio.metros_cuadrados))} m²</p>
+            <p><span class="font-semibold">Habitaciones:</span> ${escapeHtml(formatearPrecio(anuncio.habitaciones))}</p>
+            <p><span class="font-semibold">Baños:</span> ${escapeHtml(formatearPrecio(anuncio.banos))}</p>
+            <p><span class="font-semibold">Estado:</span> ${escapeHtml(anuncio.estado)}</p>
+          </div>
+          <p class="text-slate-600 mt-2">${escapeHtml(anuncio.descripcion)}</p>
+          ${Array.isArray(anuncio.fotos) && anuncio.fotos.length > 0 ? '<div class="flex flex-wrap gap-2">' + anuncio.fotos.map(function (f, i) { return '<img src="' + escapeHtml(f) + '" alt="' + escapeHtml(anuncio.titulo) + '" class="w-full h-40 object-cover rounded-xl" />'; }).join("") + '</div>' : ""}
+          <button type="button" class="añadir-foto-btn mt-2 w-full bg-blue-50 text-blue-700 border border-blue-200 px-3 py-2 rounded-lg text-sm font-semibold" data-id="${anuncio.id}">📷 Añadir foto</button>
+          <input type="file" id="fotos-add-${anuncio.id}" name="fotos" accept="image/*" multiple class="hidden foto-add-input" data-foto-add="1" />
+          <button type="button" class="quitar-fotos-btn mt-2 w-full bg-red-50 text-red-700 border border-red-200 px-3 py-2 rounded-lg text-sm font-semibold" data-id="${anuncio.id}">🗑️ Quitar fotos</button>
+          <div class="border-t border-blue-100 pt-4 mt-2">
+            <p class="font-semibold text-blue-900 mb-2">Calificación</p>
+            <div class="flex items-center gap-1">
+              ${[1, 2, 3, 4, 5].map(function (i) {
+                const actual = Number(ratingActual(anuncio)) || 0;
+                const filled = i <= actual ? "★" : "☆";
+                return '<button type="button" class="star-btn text-3xl" data-value="' + i + '" data-id="' + anuncio.id + '">' + filled + '</button>';
+              }).join("")}
+            </div>
+            <p class="mt-2 text-sm text-slate-500">Promedio: ${Number(promedioEstrellas(anuncio)) > 0 ? Number(promedioEstrellas(anuncio)).toFixed(1) + " / 5" : "Sin calificaciones"}</p>
+            <div class="flex items-center gap-3 mt-2">
+              <button type="button" class="like-btn bg-blue-700 hover:bg-blue-800 text-white px-3 py-1.5 rounded-lg text-sm font-semibold" data-id="${anuncio.id}">👍 Me gusta</button>
+              <button type="button" class="dislike-btn bg-blue-700 hover:bg-blue-800 text-white px-3 py-1.5 rounded-lg text-sm font-semibold" data-id="${anuncio.id}">👎 No me gusta</button>
+            </div>
+            <p class="mt-2 text-sm text-slate-500">👍 ${escapeHtml(Number(anuncio.likes) || 0)} · 👎 ${escapeHtml(Number(anuncio.dislikes) || 0)}</p>
+            <button type="button" class="delete-rating-btn mt-2 text-red-500 hover:text-red-700 text-sm font-semibold" data-id="${anuncio.id}">🗑️ Borrar calificación</button>
+          </div>
+          <div class="border-t border-blue-100 pt-4 mt-2">
+            <form class="comentario-form flex flex-col sm:flex-row gap-2" data-id="${anuncio.id}">
+              <input type="text" class="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm" placeholder="Ej. El vendedor ocultó que la casa tenía humedad" required />
+              <button type="submit" class="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-lg text-sm font-semibold">Comentar</button>
+            </form>
+            <div class="comentarios mt-3 flex flex-col gap-2"></div>
+          </div>
+        </div>
+      `;
+      const cont = modal.querySelector(".comentarios");
+      const lista = Array.isArray(anuncio.comentarios) ? anuncio.comentarios : [];
+      if (lista.length === 0) {
+        cont.innerHTML = '<p class="text-sm text-slate-400">Sin comentarios aún.</p>';
+      } else {
+        cont.innerHTML = lista.map(function (c, i) {
+          return '<div class="bg-blue-50 rounded-lg p-3 text-sm text-slate-700 flex items-start justify-between gap-2">' +
+            '<span>' + escapeHtml(c.texto) + "</span>" +
+            '<button type="button" class="delete-comentario-btn text-red-500 hover:text-red-700 text-sm font-semibold" data-id="' + anuncio.id + '" data-comentario-idx="' + i + '">🗑️ Eliminar</button>' +
+            "</div>";
+        }).join("");
+      }
+      modal.style.display = "flex";
+    }
+
+    function cerrarModal() {
+      document.getElementById("modal-detalle").style.display = "none";
+    }
+
+    document.getElementById("form-publicacion").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const form = e.target;
+      const anuncios = leerAnuncios();
+
+      const nuevoAnuncio = {
+        id: crearId(),
+        titulo: form.titulo.value.trim(),
+        precio: Number(form.precio.value),
+        barrio: form.barrio.value,
+        metros_cuadrados: Number(form.metros_cuadrados.value),
+        habitaciones: Number(form.habitaciones.value),
+        banos: Number(form.banos.value),
+        estado: form.estado.value,
+        descripcion: form.descripcion.value.trim(),
+        likes: 0,
+        dislikes: 0,
+        likePor: null,
+        dislikePor: null,
+        ratings: [],
+        fotos: [],
+        comentarios: [],
+        fecha: new Date().toISOString(),
+        owner: USUARIO_ACTUAL
+      };
+
+      const fotosInput = form.fotos;
+      const files = fotosInput && fotosInput.files ? Array.from(fotosInput.files) : [];
+      if (files.length > 0) {
+        const lecturas = [];
+        let completadas = 0;
+        files.forEach(function (file) {
+          const lector = new FileReader();
+          lector.onload = function () {
+            lecturas.push(String(lector.result));
+            completadas = completadas + 1;
+            if (completadas === files.length) {
+              nuevoAnuncio.fotos = lecturas;
+              anuncios.push(nuevoAnuncio);
+              guardarAnuncios(anuncios);
+              form.reset();
+              renderizarCatalogo(filtroActual);
+              alert("¡Anuncio publicado con éxito!");
+            }
+          };
+          lector.readAsDataURL(file);
+        });
+      } else {
+        nuevoAnuncio.fotos = [];
+        anuncios.push(nuevoAnuncio);
+        guardarAnuncios(anuncios);
+        form.reset();
+        renderizarCatalogo(filtroActual);
+        alert("¡Anuncio publicado con éxito!");
+      }
+    });
+
+    document.addEventListener("submit", function (e) {
+      const target = e.target;
+      const f = target && target.closest ? target.closest(".comentario-form") : null;
+      if (!f) { return; }
+      e.preventDefault();
+      const id = f.getAttribute("data-id");
+      const input = f.querySelector("input[type='text']");
+      const texto = input ? input.value.trim() : "";
+      if (!texto) { return; }
+      const anuncios = leerAnuncios();
+      const anuncio = anuncios.find(function (a) { return a.id === id; });
+      if (!anuncio) { return; }
+      if (!Array.isArray(anuncio.comentarios)) { anuncio.comentarios = []; }
+      anuncio.comentarios.push({ texto: texto, fecha: new Date().toISOString() });
+      guardarAnuncios(anuncios);
+      renderizarCatalogo(filtroActual);
+      const modal = document.getElementById("modal-detalle");
+      if (modal && modal.style.display === "flex") { abrirModal(id); }
+    });
+
+    function rate(e, starBtn) {
+      if (e && e.preventDefault) { e.preventDefault(); }
+      const id = starBtn.getAttribute("data-id");
+      const valor = Number(starBtn.getAttribute("data-value"));
+      const anuncios = leerAnuncios();
+      const anuncio = anuncios.find(function (a) { return a.id === id; });
+      if (!anuncio) { return; }
+      if (!Array.isArray(anuncio.ratings)) { anuncio.ratings = []; }
+      anuncio.ratings = [valor];
+      guardarAnuncios(anuncios);
+      renderizarCatalogo(filtroActual);
+      abrirModal(id);
+    }
+
+    function toggleLike(e, btn) {
+      if (e && e.preventDefault) { e.preventDefault(); }
+      const id = btn.getAttribute("data-id");
+      const anuncios = leerAnuncios();
+      const anuncio = anuncios.find(function (a) { return a.id === id; });
+      if (!anuncio) { return; }
+      if (anuncio.dislikePor === USUARIO_ACTUAL) {
+        anuncio.dislikes = Math.max(0, (Number(anuncio.dislikes) || 0) - 1);
+        anuncio.dislikePor = null;
+      }
+      if (anuncio.likePor !== USUARIO_ACTUAL) {
+        anuncio.likePor = USUARIO_ACTUAL;
+        anuncio.likes = (Number(anuncio.likes) || 0) + 1;
+      }
+      guardarAnuncios(anuncios);
+      renderizarCatalogo(filtroActual);
+      abrirModal(id);
+    }
+
+    function toggleDislike(e, btn) {
+      if (e && e.preventDefault) { e.preventDefault(); }
+      const id = btn.getAttribute("data-id");
+      const anuncios = leerAnuncios();
+      const anuncio = anuncios.find(function (a) { return a.id === id; });
+      if (!anuncio) { return; }
+      if (anuncio.likePor === USUARIO_ACTUAL) {
+        anuncio.likes = Math.max(0, (Number(anuncio.likes) || 0) - 1);
+        anuncio.likePor = null;
+      }
+      if (anuncio.dislikePor !== USUARIO_ACTUAL) {
+        anuncio.dislikePor = USUARIO_ACTUAL;
+        anuncio.dislikes = (Number(anuncio.dislikes) || 0) + 1;
+      }
+      guardarAnuncios(anuncios);
+      renderizarCatalogo(filtroActual);
+      abrirModal(id);
+    }
+
+    function deleteAnuncio(id) {
+      const anuncios = leerAnuncios().filter(function (a) { return a.id !== id; });
+      guardarAnuncios(anuncios);
+      renderizarCatalogo(filtroActual);
+      cerrarModal();
+    }
+
+    function deleteComentario(id, idx) {
+      const anuncios = leerAnuncios();
+      const anuncio = anuncios.find(function (a) { return a.id === id; });
+      if (!anuncio) { return; }
+      if (Array.isArray(anuncio.comentarios)) {
+        anuncio.comentarios.splice(idx, 1);
+        guardarAnuncios(anuncios);
+      }
+      renderizarCatalogo(filtroActual);
+      abrirModal(id);
+    }
+
+    function deleteRating(id) {
+      const anuncios = leerAnuncios();
+      const anuncio = anuncios.find(function (a) { return a.id === id; });
+      if (!anuncio) { return; }
+      anuncio.ratings = [];
+      guardarAnuncios(anuncios);
+      renderizarCatalogo(filtroActual);
+      abrirModal(id);
+    }
+
+    const fotosAddInput = document.querySelector(".foto-add-input");
+    if (fotosAddInput) {
+      fotosAddInput.addEventListener("change", function () {
+        const files = Array.from(fotosAddInput.files || []);
+        if (!files.length) { return; }
+        const anuncios = leerAnuncios();
+        const anuncio = anuncios.find(function (a) { return a.id === anuncioActivoId; });
+        if (!anuncio) { return; }
+        const lecturas = Array.isArray(anuncio.fotos) ? anuncio.fotos.slice() : [];
+        let completadas = 0;
+        files.forEach(function (file) {
+          const lector = new FileReader();
+          lector.onload = function () {
+            lecturas.push(String(lector.result));
+            completadas = completadas + 1;
+            if (completadas === files.length) {
+              anuncio.fotos = lecturas;
+              guardarAnuncios(anuncios);
+              renderizarCatalogo(filtroActual);
+              abrirModal(anuncioActivoId);
+            }
+          };
+          lector.readAsDataURL(file);
+        });
+      });
+    }
+
+    document.addEventListener("click", function (e) {
+      const starBtn = e.target.closest(".star-btn");
+      if (starBtn) { rate(e, starBtn); return; }
+
+      const likeBtn = e.target.closest(".like-btn");
+      if (likeBtn) { toggleLike(e, likeBtn); return; }
+
+      const dislikeBtn = e.target.closest(".dislike-btn");
+      if (dislikeBtn) { toggleDislike(e, dislikeBtn); return; }
+
+      const deleteRatingBtn = e.target.closest(".delete-rating-btn");
+      if (deleteRatingBtn) { deleteRating(deleteRatingBtn.getAttribute("data-id")); return; }
+
+      const deleteAnuncioBtn = e.target.closest(".delete-anuncio-btn");
+      if (deleteAnuncioBtn) { deleteAnuncio(deleteAnuncioBtn.getAttribute("data-id")); return; }
+
+      const deleteComentarioBtn = e.target.closest(".delete-comentario-btn");
+      if (deleteComentarioBtn) { deleteComentario(deleteComentarioBtn.getAttribute("data-id"), Number(deleteComentarioBtn.getAttribute("data-comentario-idx"))); return; }
+
+      const abrirBtn = e.target.closest(".abrir-detalle-btn");
+      if (abrirBtn) { abrirModal(abrirBtn.getAttribute("data-id")); return; }
+
+      const cerrarBtn = e.target.closest(".cerrar-detalle-btn");
+      if (cerrarBtn) { cerrarModal(); return; }
+
+      const addFotoBtn = e.target.closest(".añadir-foto-btn");
+      if (addFotoBtn) {
+        const modal = document.getElementById("modal-detalle");
+        const input = modal ? modal.querySelector(".foto-add-input") : null;
+        if (input) { input.click(); }
+        return;
+      }
+
+      const quitarFotoBtn = e.target.closest(".quitar-fotos-btn");
+      if (quitarFotoBtn) {
+        const qid = quitarFotoBtn.getAttribute("data-id");
+        const anunciosQ = leerAnuncios();
+        const anuncioQ = anunciosQ.find(function (a) { return a.id === qid; });
+        if (anuncioQ) {
+          anuncioQ.fotos = [];
+          guardarAnuncios(anunciosQ);
+          renderizarCatalogo(filtroActual);
+          abrirModal(qid);
+        }
+        return;
+      }
+
+      const interactive = e.target.closest("button, input, textarea, select, form, a");
+      if (interactive) { return; }
+
+      const card = e.target.closest("[data-id]");
+      if (card) { abrirModal(card.getAttribute("data-id")); return; }
+    });
+
+    const tabCatBtn = document.getElementById("tab-cat");
+    const tabMisBtn = document.getElementById("tab-mis");
+    tabCatBtn.addEventListener("click", function () {
+      filtroActual = "todos";
+      renderizarCatalogo("todos");
+      actualizarTabs("cat");
+    });
+    tabMisBtn.addEventListener("click", function () {
+      filtroActual = "mis";
+      renderizarCatalogo("mis");
+      actualizarTabs("mis");
+    });
+
+    function actualizarTabs(activo) {
+      const catBtn = document.getElementById("tab-cat");
+      const misBtn = document.getElementById("tab-mis");
+      if (catBtn) { catBtn.className = "px-4 py-2 rounded-xl font-semibold " + (activo === "cat" ? "bg-blue-700 text-white" : "bg-white text-blue-900 border border-blue-200"); }
+      if (misBtn) { misBtn.className = "px-4 py-2 rounded-xl font-semibold " + (activo === "mis" ? "bg-blue-700 text-white" : "bg-white text-blue-900 border border-blue-200"); }
+    }
+
+    renderizarCatalogo("todos");
+  </script>
+</body>
+</html>
+<a href="../informe_final.pdf" target="_blank" class="bg-blue-600 text-white px-4 py-2 rounded font-bold">
+    📄 Descargar Informe Completo (PDF)
+</a>
+
