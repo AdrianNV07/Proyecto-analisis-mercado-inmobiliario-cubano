@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PlayaTransparente</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1C0DCEJWWC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-1C0DCEJWWC');
+</script>
 </head>
 <body class="bg-slate-50 min-h-screen flex flex-col font-sans text-slate-800">
   <header class="bg-gradient-to-r from-blue-700 via-blue-700 to-blue-900 text-white">
@@ -554,7 +562,6 @@
   </script>
 </body>
 </html>
-<a href="Informe_final.pdf" target="_blank" class="bg-blue-600 text-white px-4 py-2 rounded font-bold">
-    📄 Descargar Informe Completo (PDF)
+<a href="informe_final.pdf" target="_blank" onclick="gtag('event', 'descarga_informe', {'event_category': 'engagement', 'event_label': 'PDF Descargado'});" class="[TUS CLASES DE DISEÑO AQUÍ]">
+    📄Descargar Informe Completo (PDF)
 </a>
-
